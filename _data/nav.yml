@@ -1,8 +1,5 @@
 - name: "Contact"
-  link: "contact"
+  link: "https://www.kth.se/profile/gocht/"
 
-- name: "Resume"
-  link: "resume.pdf"
-
-- name: "About"
-  link: "/researcher/"
+- name: "Home"
+  link: "index.html"
