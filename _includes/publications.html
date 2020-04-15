@@ -397,9 +397,72 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </form>
 <table id="qs_table" border="1">
 <tbody>
+<tr id="Elffers2020" class="entry">
+	<td>Elffers J, Gocht S, McCreesh C and Nordström J (2020), <i>"Justifying All Differences Using Pseudo-Boolean Reasoning."</i>, In Proceedings of the 34th AAAI Conference on Artificial Intelligence. , pp. to appear.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2020','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2020','bibtex')">BibTeX</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Elffers2020" class="abstract noshow">
+	<td><b>Abstract</b>: Constraint programming solvers support rich global constraints and propagators, which make them both powerful and<br>hard to debug. In the Boolean satisfiability community, prooflogging is the standard solution for generating trustworthy<br>outputs, and this has become key to the social acceptability<br>of computer-generated proofs. However, reusing this technology for constraint programming requires either much weaker<br>propagation, or an impractical blowup in proof length. This<br>paper demonstrates that simple, clean, and efficient proof logging is still possible for the all-different constraint, through<br>pseudo-Boolean reasoning. We explain how such proofs can<br>be expressed and verified mechanistically, describe an implementation, and discuss the broader implications for proof logging in constraint programming.</td>
+</tr>
+<tr id="bib_Elffers2020" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Elffers2020,
+  author = {Jan Elffers and Stephan Gocht and Ciaran McCreesh and Jakob Nordström},
+  title = {Justifying All Differences Using Pseudo-Boolean Reasoning.},
+  booktitle = {Proceedings of the 34th AAAI Conference on Artificial Intelligence},
+  year = {2020},
+  pages = {to appear}
+}
+</pre></td>
+</tr>
+<tr id="Beckert2019" class="entry">
+	<td>Beckert B, Bormer T, Gocht S, Herda M, Lentzsch D and Ulbrich M (2019), <i>"Using Relational Verification for Program Slicing"</i>, In Software Engineering and Formal Methods. SEFM 2019.  Vol. 11724, pp. 353-372.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Beckert2019','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Beckert2019','bibtex')">BibTeX</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Beckert2019" class="abstract noshow">
+	<td><b>Abstract</b>: Program slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are minimal in size, the program's semantics must be considered. Existing approaches that go beyond a syntactical analysis and do take the semantics into account are not fully automatic and require auxiliary specifications from the user. In this paper, we adapt relational verification to check whether a slice candidate obtained by removing some instructions from a program is indeed a valid slice. Based on this, we propose a framework for precise and automatic program slicing. As part of this framework, we present three strategies for the generation of slice candidates, and we show how dynamic slicing approaches -- that interweave generating and checking slice candidates -- can be used for this purpose. The framework can easily be extended with other strategies for generating slice candidates. We discuss the strengths and weaknesses of slicing approaches that use our framework.</td>
+</tr>
+<tr id="bib_Beckert2019" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Beckert2019,
+  author = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattias},
+  title = {Using Relational Verification for Program Slicing},
+  booktitle = {Software Engineering and Formal Methods. SEFM 2019},
+  year = {2019},
+  volume = {11724},
+  pages = {353--372}
+}
+</pre></td>
+</tr>
+<tr id="Gocht2019" class="entry">
+	<td>Gocht S, Nordström J and Yehudayoff A (2019), <i>"On Division Versus Saturation in Pseudo-Boolean Solving"</i>, In Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19., 7, 2019. , pp. 1711-1718.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2019','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2019','bibtex')">BibTeX</a>] [<a href="http://doi.org/10.24963/ijcai.2019/237" target="_blank">DOI</a>] [<a href="https://doi.org/10.24963/ijcai.2019/237" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Gocht2019" class="abstract noshow">
+	<td><b>Abstract</b>: The conflict-driven clause learning (CDCL) paradigm has revolutionized SAT solving over the last two decades. Extending this approach to pseudo-Boolean (PB) solvers doing 0-1 linear programming holds the promise of further exponential improvements in theory, but intriguingly such gains have not materialized in practice. Also intriguingly, most PB extensions of CDCL use not the division rule in cutting planes as defined in [Cook et al., '87] but instead the so-called saturation rule. To the best of our knowledge, there has been no study comparing the strengths of division and saturation in the context of conflict-driven PB learning, when all linear combinations of inequalities are required to cancel variables. We show that PB solvers with division instead of saturation can be exponentially stronger. In the other direction, we prove that simulating a single saturation step can require an exponential number of divisions. We also perform some experiments to see whether these phenomena can be observed in actual solvers. Our conclusion is that a careful combination of division and saturation seems to be crucial to harness more of the power of cutting planes.s</td>
+</tr>
+<tr id="bib_Gocht2019" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Gocht2019,
+  author = {Gocht, Stephan and Nordström, Jakob and Yehudayoff, Amir},
+  title = {On Division Versus Saturation in Pseudo-Boolean Solving},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19},
+  year = {2019},
+  pages = {1711--1718},
+  url = {https://doi.org/10.24963/ijcai.2019/237},
+  doi = {10.24963/ijcai.2019/237}
+}
+</pre></td>
+</tr>
 <tr id="Elffers2018" class="entry">
-	<td>Elffers J, Gir&aacute;ldez-Cru J, Gocht S, Nordstr&ouml;m J and Simon L (2018), <i>"Seeking Practical CDCL Insights from Theoretical SAT Benchmarks."</i>, In Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence (IJCAI). , pp. 1300-1308.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2018','bibtex')">BibTeX</a>] [<a href="http://doi.org/10.24963/ijcai.2018/181" target="_blank">DOI</a>] [<a href="https://www.ijcai.org/proceedings/2018/181" target="_blank">URL</a>]</p>
+	<td>Elffers J, Gir&aacute;ldez-Cru J, Gocht S, Nordstr&ouml;m J and Simon L (2018), <i>"Seeking Practical CDCL Insights from Theoretical SAT Benchmarks."</i>, In Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI-18. , pp. 1300-1308.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2018','bibtex')">BibTeX</a>]</p>
 	</td>
 </tr>
 <tr id="abs_Elffers2018" class="abstract noshow">
@@ -411,21 +474,19 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Elffers2018,
   author = {Elffers, Jan and Gir&aacute;ldez-Cru, Jes&uacute;s and Gocht, Stephan and Nordstr&ouml;m, Jakob and Simon, Laurent},
   title = {Seeking Practical CDCL Insights from Theoretical SAT Benchmarks.},
-  booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence (IJCAI)},
+  booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI-18},
   year = {2018},
-  pages = {1300--1308},
-  url = {https://www.ijcai.org/proceedings/2018/181},
-  doi = {10.24963/ijcai.2018/181}
+  pages = {1300--1308}
 }
 </pre></td>
 </tr>
 <tr id="Vinyals2018" class="entry">
-	<td>Vinyals M, Elffers J, Gir&aacute;ldez-Cru J, Gocht S and Nordstr&ouml;m J (2018), <i>"In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving"</i>, In International Conference on Theory and Applications of Satisfiability Testing. , pp. 292-310.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Vinyals2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Vinyals2018','bibtex')">BibTeX</a>] [<a href="http://doi.org/10.1007/978-3-319-94144-8_18" target="_blank">DOI</a>] [<a href="https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18" target="_blank">URL</a>]</p>
+	<td>Vinyals M, Elffers J, Gir&aacute;ldez-Cru J, Gocht S and Nordstr&ouml;m J (2018), <i>"In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving"</i>, In Theory and Applications of Satisfiability Testing. SAT 2018..  Vol. 10929, pp. 292-310.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Vinyals2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Vinyals2018','bibtex')">BibTeX</a>]</p>
 	</td>
 </tr>
 <tr id="abs_Vinyals2018" class="abstract noshow">
-	<td><b>Abstract</b>: We initiate a proof complexity theoretic study of subsystems of<br>cutting planes (CP) modelling proof search in conflict-driven pseudo-<br>Boolean (PB) solvers. These algorithms combine restrictions such as<br>that addition of constraints should always cancel a variable and/or<br>that so-called saturation is used instead of division. It is known<br>that on CNF inputs cutting planes with cancelling addition and<br>saturation is essentially just resolution. We show that even if<br>general addition is allowed, this proof system is still polynomially<br>simulated by resolution with respect to proof size as long as<br>coefficients are polynomially bounded.<br>As a further way of delineating the proof power of subsystems of CP,<br>we propose to study a number of easy (but tricky) instances of<br>problems in NP. Most of the formulas we consider have short and simple<br>tree-like proofs in general CP, but the restricted subsystems seem to<br>reveal a much more varied landscape. Although we are not able to<br>formally establish separations between different subsystems of<br>CP—which would require major technical breakthroughs in proof<br>complexity—these formulas appear to be good candidates for obtaining<br>such separations. We believe that a closer study of these benchmarks<br>is a promising approach for shedding more light on the reasoning power<br>of pseudo-Boolean solvers.</td>
+	<td><b>Abstract</b>: We initiate a proof complexity theoretic study of subsystems of<br>cutting planes (CP) modelling proof search in conflict-driven pseudo-<br>Boolean (PB) solvers. These algorithms combine restrictions such as<br>that addition of constraints should always cancel a variable and/or<br>that so-called saturation is used instead of division. It is known<br>that on CNF inputs cutting planes with cancelling addition and<br>saturation is essentially just resolution. We show that even if<br>general addition is allowed, this proof system is still polynomially<br>simulated by resolution with respect to proof size as long as<br>coefficients are polynomially bounded.<br>As a further way of delineating the proof power of subsystems of CP,<br>we propose to study a number of easy (but tricky) instances of<br>problems in NP. Most of the formulas we consider have short and simple<br>tree-like proofs in general CP, but the restricted subsystems seem to<br>reveal a much more varied landscape. Although we are not able to<br>formally establish separations between different subsystems of<br>CP---which would require major technical breakthroughs in proof<br>complexity---these formulas appear to be good candidates for obtaining<br>such separations. We believe that a closer study of these benchmarks<br>is a promising approach for shedding more light on the reasoning power<br>of pseudo-Boolean solvers.</td>
 </tr>
 <tr id="bib_Vinyals2018" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -433,38 +494,37 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Vinyals2018,
   author = {Vinyals, Marc and Elffers, Jan and Gir&aacute;ldez-Cru, Jes&uacute;s and Gocht, Stephan and Nordstr&ouml;m, Jakob},
   title = {In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving},
-  booktitle = {International Conference on Theory and Applications of Satisfiability Testing},
+  booktitle = {Theory and Applications of Satisfiability Testing. SAT 2018.},
   year = {2018},
-  pages = {292--310},
-  url = {https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18},
-  doi = {10.1007/978-3-319-94144-8_18}
+  volume = {10929},
+  pages = {292--310}
 }
 </pre></td>
 </tr>
-<tr id="Beckert2017" class="entry">
-	<td>Beckert B, Bormer T, Gocht S, Herda M, Lentzsch D and Ulbrich M (2017), <i>"SemSlice: Exploiting Relational Verification for Automatic Program Slicing"</i>, In Integrated Formal Methods. , pp. 312-319.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Beckert2017','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Beckert2017','bibtex')">BibTeX</a>] [<a href="https://link.springer.com/chapter/10.1007/978-3-319-66845-1_20" target="_blank">URL</a>]</p>
+<tr id="beckert2017" class="entry">
+	<td>Beckert B, Bormer T, Gocht S, Herda M, Lentzsch D and Ulbrich M (2017), <i>"SemSlice: Exploiting Relational Verification for Automatic Program Slicing"</i>, In Integrated Formal Methods. IFM 2017.  Vol. 10510, pp. 312-319.
+	<p class="infolinks">[<a href="javascript:toggleInfo('beckert2017','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('beckert2017','bibtex')">BibTeX</a>]</p>
 	</td>
 </tr>
-<tr id="abs_Beckert2017" class="abstract noshow">
+<tr id="abs_beckert2017" class="abstract noshow">
 	<td><b>Abstract</b>: We present SemSlice, a tool which automatically produces very precise slices for C routines. Slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are close to the minimal number of statements, the program's semantics must be considered. SemSlice is based on automatic relational regression verification, which SemSlice uses to select valid slices from a set of candidate slices. We present several approaches for producing candidates for precise slices. Evaluation shows that regression verification (based on coupling invariant inference) is a powerful tool for semantics-aware slicing: precise slices for typical slicing challenges can be found automatically and fast.</td>
 </tr>
-<tr id="bib_Beckert2017" class="bibtex noshow">
+<tr id="bib_beckert2017" class="bibtex noshow">
 <td><b>BibTeX</b>:
 <pre>
-@inproceedings{Beckert2017,
+@inproceedings{beckert2017,
   author = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattiasg},
   title = {SemSlice: Exploiting Relational Verification for Automatic Program Slicing},
-  booktitle = {Integrated Formal Methods},
+  booktitle = {Integrated Formal Methods. IFM 2017},
   year = {2017},
-  pages = {312--319},
-  url = {https://link.springer.com/chapter/10.1007/978-3-319-66845-1_20}
+  volume = {10510},
+  pages = {312--319}
 }
 </pre></td>
 </tr>
 <tr id="gocht2017accelerating" class="entry">
-	<td>Gocht S and Balyo T (2017), <i>"Accelerating SAT Based Planning with Incremental SAT Solving"</i>, In Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling. , pp. 135-139.
-	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2017accelerating','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2017accelerating','bibtex')">BibTeX</a>] [<a href="https://www.aaai.org/ocs/index.php/ICAPS/ICAPS17/paper/view/15580" target="_blank">URL</a>]</p>
+	<td>Gocht S and Balyo T (2017), <i>"Accelerating SAT Based Planning with Incremental SAT Solving"</i>, In Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling (ICAPS 2017). , pp. 135-139.
+	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2017accelerating','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2017accelerating','bibtex')">BibTeX</a>]</p>
 	</td>
 </tr>
 <tr id="abs_gocht2017accelerating" class="abstract noshow">
@@ -476,56 +536,15 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{gocht2017accelerating,
   author = {Gocht, Stephan and Balyo, Tom&aacute;&scaron;},
   title = {Accelerating SAT Based Planning with Incremental SAT Solving},
-  booktitle = {Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling},
+  booktitle = {Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling (ICAPS 2017)},
   year = {2017},
-  pages = {135--139},
-  url = {https://www.aaai.org/ocs/index.php/ICAPS/ICAPS17/paper/view/15580}
-}
-</pre></td>
-</tr>
-<tr id="gocht2017incremental" class="entry">
-	<td>Gocht S (2017), <i>"Incremental SAT Solving for SAT Based Planning"</i>. Thesis at: Karlsruhe Institute of Technology (KIT).
-	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2017incremental','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2017incremental','bibtex')">BibTeX</a>] [<a href="https://algo2.iti.kit.edu/3324.php" target="_blank">URL</a>]</p>
-	</td>
-</tr>
-<tr id="abs_gocht2017incremental" class="abstract noshow">
-	<td><b>Abstract</b>: One of the most successful approaches to automated planning is the translation to proposi-<br>tional satisfiability (SAT). This thesis evaluates incremental SAT solving for several modern<br>encodings for SAT based planning.<br>Experiments based on benchmarks from the 2014 International Planning Competition<br>show that an incremental approach significantly outperforms non-incremental solving.<br>Although, planning specific heuristics and advanced scheduling of makespans is not used,<br>it is possible to outperform the state-of-the-art SAT based planning systems Madagascar<br>and PDRPlan in the number of solved instances.</td>
-</tr>
-<tr id="bib_gocht2017incremental" class="bibtex noshow">
-<td><b>BibTeX</b>:
-<pre>
-@thesis{gocht2017incremental,
-  author = {Gocht, Stephan},
-  title = {Incremental SAT Solving for SAT Based Planning},
-  school = {Karlsruhe Institute of Technology (KIT)},
-  year = {2017},
-  url = {https://algo2.iti.kit.edu/3324.php}
-}
-</pre></td>
-</tr>
-<tr id="gocht2014refinement" class="entry">
-	<td>Gocht S (2014), <i>"Refinement of Path Conditions for Information Flow Analysis"</i>. Thesis at: Karlsruhe Institute of Technology (KIT).
-	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2014refinement','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2014refinement','bibtex')">BibTeX</a>] [<a href="https://asa.iti.kit.edu/130_441.php" target="_blank">URL</a>]</p>
-	</td>
-</tr>
-<tr id="abs_gocht2014refinement" class="abstract noshow">
-	<td><b>Abstract</b>: Path conditions are a static analysis tool for information flow control (IFC). They can be<br>used to produce witnesses for an illegal flow, which do not necessarily represent a concrete<br>execution of the program. This bachelor thesis will provide a detailed approach to eliminate<br>these false witnesses using counterexample guided abstraction refinement (CEGAR) and<br>thereby increase precision.<br>As not all values satisfying the PC need to occur simultaneously during a program execution,<br>a property is introduced which is true iff the values occur during the program execution.<br>Some values are always occurring simultaneously if a flow exists. This information can be<br>used to increase precision and is added to the described property, without using temporal<br>logic. Finally, the CEGAR approach is adopted to provide an algorithm for checking this<br>property.</td>
-</tr>
-<tr id="bib_gocht2014refinement" class="bibtex noshow">
-<td><b>BibTeX</b>:
-<pre>
-@thesis{gocht2014refinement,
-  author = {Gocht, Stephan},
-  title = {Refinement of Path Conditions for Information Flow Analysis},
-  school = {Karlsruhe Institute of Technology (KIT)},
-  year = {2014},
-  url = {https://asa.iti.kit.edu/130_441.php}
+  pages = {135--139}
 }
 </pre></td>
 </tr>
 </tbody>
 </table>
 <footer>
- <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 12/12/2018.</small>
+ <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 13/12/2019.</small>
 </footer>
 <!-- file generated by JabRef -->
