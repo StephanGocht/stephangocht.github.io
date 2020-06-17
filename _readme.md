@@ -1,4 +1,8 @@
-# Deploy updated site:
+# Deploy updated site on github
+
+    git push
+
+# Deploy updated site (on kth):
 
   /home/g/o/gocht/.gem/ruby/2.3.0/gems/jekyll-3.5.2/exe/jekyll b -d ~/public_html/
 
