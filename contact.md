@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ## Contact
 stephan.gocht@cs.lth.se
 

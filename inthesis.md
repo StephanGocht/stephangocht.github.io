@@ -1,3 +1,7 @@
+---
+layout: default
+---
+
 ## Publications
 
 {% include inthesis.html %}
