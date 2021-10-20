@@ -1,8 +1,9 @@
 ---
 layout: default
+title: Thesis
 ---
 
-## Publications
+# Publications
 
 {% include inthesis.html %}
 
