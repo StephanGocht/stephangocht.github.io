@@ -3,7 +3,7 @@ layout: default
 title: Contact
 ---
 
-## Contact
+# Email
 stephan.gocht@cs.lth.se
 
 # Postal adress:

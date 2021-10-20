@@ -2,13 +2,13 @@
 layout: default
 ---
 
-## About Me
+# About Me
 
 <img class="profile-picture" src="me.jpg">
 
 Hi! I am a PhD student at Lund University.
 
-## Research Interest
+# Research Interest
 
 
 * SAT solving
@@ -18,12 +18,12 @@ Hi! I am a PhD student at Lund University.
 * automated planning
 * software analysis and verification.
 
-## Publications
+# Publications
 
 {% include publications.html %}
 
 
-## Research Tools
+# Research Tools
 
 * [VeriPB](https://github.com/StephanGocht/VeriPB), a tool for
   verifying refutations of pseudo-Boolean formulas (proofs of
