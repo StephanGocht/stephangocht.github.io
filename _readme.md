@@ -11,7 +11,8 @@
 JabRef
  * sort by year
  * export html (list)
-
-Remove html, head, body tags, make sure abstract does not contain empty line (jabref will
-create <p> without closing tag, which jekyll doesn't like.
-replace html file (_includes/publications.html) and update site
+ * remove html, head, body tags
+ * remove style for body
+ * make sure abstract does not contain empty line (jabref will
+   create <p> without closing tag, which jekyll doesn't like.
+ * replace html file (_includes/publications.html) and update site
