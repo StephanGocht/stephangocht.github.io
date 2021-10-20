@@ -3,7 +3,7 @@ layout: default
 title: Thesis
 ---
 
-# Publications
+# Thesis Papers
 
 {% include inthesis.html %}
 
