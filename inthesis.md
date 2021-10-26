@@ -8,4 +8,4 @@ title: Thesis
 {% include inthesis.html %}
 
 Further manuscripts currently under double-blind review or in
-preparation might be added to this list.
+preparation might be added or replace papers in this list.
