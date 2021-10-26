@@ -395,6 +395,29 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </form>
 <table id="qs_table" border="1">
 <tbody>
+<tr id="DGDNS21Cutting" class="entry">
+	<td>Devriendt J, Gocht S, Demirovi&cacute;, Emir, Nordström J and Stuckey P (2021), <i>"Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35(5), pp. 3768-3777.
+	<p class="infolinks">[<a href="javascript:toggleInfo('DGDNS21Cutting','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('DGDNS21Cutting','bibtex')">BibTeX</a>] [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/16494" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_DGDNS21Cutting" class="abstract noshow">
+	<td><b>Abstract</b>: Core-guided techniques have revolutionized Boolean satisfiability<br>approaches to optimization problems (MaxSAT), but the process at the<br>heart of these methods, strengthening bounds on solutions by<br>repeatedly adding cardinality constraints, remains a bottleneck.<br>Cardinality constraints require significant work to be re-encoded to<br>SAT, and SAT solvers are notoriously weak at cardinality reasoning.<br>In this work, we lift core-guided search to pseudo-Boolean (PB)<br>solvers, which deal with more general PB optimization problems and<br>operate natively with cardinality constraints. The cutting planes<br>method used in such solvers allows us to derive stronger cardinality<br>constraints, which yield better updates to solution bounds, and the<br>increased efficiency of objective function reformulation also makes<br>it feasible to switch repeatedly between lower-bounding and<br>upper-bounding search.  A thorough evaluation on applied and crafted<br>benchmarks shows that our core-guided PB solver significantly<br>improves on the state of the art in pseudo-Boolean optimization.</td>
+</tr>
+<tr id="bib_DGDNS21Cutting" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DGDNS21Cutting,
+  author = {Jo Devriendt and Stephan Gocht and Demirovi&cacute; and Emir and Jakob Nordström and Peter Stuckey},
+  title = {Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  year = {2021},
+  volume = {35},
+  number = {5},
+  pages = {3768--3777},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/16494}
+}
+</pre></td>
+</tr>
 <tr id="GN21CertifyingParity" class="entry">
 	<td>Gocht S and Nordström J (2021), <i>"Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35(5), pp. 3768-3777.
 	<p class="infolinks">[<a href="javascript:toggleInfo('GN21CertifyingParity','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('GN21CertifyingParity','bibtex')">BibTeX</a>] [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/16494" target="_blank">URL</a>]</p>
@@ -415,6 +438,27 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
   number = {5},
   pages = {3768--3777},
   url = {https://ojs.aaai.org/index.php/AAAI/article/view/16494}
+}
+</pre></td>
+</tr>
+<tr id="Gocht2021" class="entry">
+	<td>Gocht S, Nordström J and Martins R (2021), <i>"Certifying CNF Encodings of Pseudo-Boolean Constraints (abstract)"</i>, In Proceedings Seventh Workshop onProof eXchange for Theorem Proving. , pp. 48.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2021','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2021','bibtex')">BibTeX</a>] [<a href="http://eptcs.web.cse.unsw.edu.au/content.cgi?PxTP2021#EPTCS336.5" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Gocht2021" class="abstract noshow">
+	<td><b>Abstract</b>: The dramatic improvements in Boolean satisfiability (SAT) solving since the turn of the millennium have made it possible to leverage state-of-the-art conflict-driven clause learning (CDCL) solvers for many combinatorial problems in academia and industry, and the use of proof logging has played a crucial role in increasing the confidence that the results these solvers produce are correct. However, the conjunctive normal form (CNF) format used for SAT proof logging means that it is hard to extend the method to other, stronger, solving paradigms for combinatorial problems. We show how to instead leverage the cutting planes proof system to provide proof logging for pseudo-Boolean solvers that translate pseudo-Boolean problems (a.k.a 0-1 integer linear programs) to CNF and run CDCL. We are hopeful that this is just a first step towards providing a unified proof logging approach that will also extend to maximum satisfiability (MaxSAT) solving and pseudo-Boolean optimization in general.</td>
+</tr>
+<tr id="bib_Gocht2021" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Gocht2021,
+  author = {Stephan Gocht and Jakob Nordström and Ruben Martins},
+  title = {Certifying CNF Encodings of Pseudo-Boolean Constraints (abstract)},
+  booktitle = {Proceedings Seventh Workshop onProof eXchange for Theorem Proving},
+  year = {2021},
+  pages = {48},
+  url = {http://eptcs.web.cse.unsw.edu.au/content.cgi?PxTP2021#EPTCS336.5}
 }
 </pre></td>
 </tr>
@@ -439,6 +483,30 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
   number = {02},
   pages = {1486--1494},
   url = {https://doi.org/10.1609/aaai.v34i02.5507}
+}
+</pre></td>
+</tr>
+<tr id="DBLP:conf/cp/GochtMMNPT20" class="entry">
+	<td>Gocht S, McBride R, McCreesh C, Nordstr&ouml;m J, Prosser P and Trimble J (2020), <i>"Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems"</i>, In Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020.  Vol. 12333, pp. 338-357. Springer.
+	<p class="infolinks">[<a href="javascript:toggleInfo('DBLP:conf/cp/GochtMMNPT20','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('DBLP:conf/cp/GochtMMNPT20','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1007/978-3-030-58475-7_20" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_DBLP:conf/cp/GochtMMNPT20" class="abstract noshow">
+	<td><b>Abstract</b>: An algorithm is said to be certifying if it outputs, together with a solution to the problem it solves, a proof that this solution is correct. We explain how state of the art maximum clique, maximum weighted clique, maximal clique enumeration and maximum common (connected) induced subgraph algorithms can be turned into certifying solvers by using pseudo-Boolean models and cutting planes proofs, and demonstrate that this approach can also handle reductions between problems. The generality of our results suggests that this method is ready for widespread adoption in solvers for combinatorial graph problems.</td>
+</tr>
+<tr id="bib_DBLP:conf/cp/GochtMMNPT20" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DBLP:conf/cp/GochtMMNPT20,
+  author = {Stephan Gocht and Ross McBride and Ciaran McCreesh and Jakob Nordstr&ouml;m and Patrick Prosser and James Trimble},
+  editor = {Helmut Simonis},
+  title = {Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems},
+  booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020},
+  publisher = {Springer},
+  year = {2020},
+  volume = {12333},
+  pages = {338--357},
+  url = {https://doi.org/10.1007/978-3-030-58475-7_20}
 }
 </pre></td>
 </tr>
@@ -487,6 +555,6 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </tbody>
 </table>
 <footer>
- <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 20/10/2021.</small>
+ <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 26/10/2021.</small>
 </footer>
 <!-- file generated by JabRef -->
