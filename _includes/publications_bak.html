@@ -1,0 +1,706 @@
+<script type="text/javascript">
+<!--
+// QuickSearch script for JabRef HTML export
+// Version: 3.0
+//
+// Copyright (c) 2006-2011, Mark Schenk
+//
+// This software is distributed under a Creative Commons Attribution 3.0 License
+// http://creativecommons.org/licenses/by/3.0/
+//
+// Features:
+// - intuitive find-as-you-type searching
+//    ~ case insensitive
+//    ~ ignore diacritics (optional)
+//
+// - search with/without Regular Expressions
+// - match BibTeX key
+//
+
+// Search settings
+var searchAbstract = true;	// search in abstract
+var searchComment = true;	// search in comment
+
+var noSquiggles = true; 	// ignore diacritics when searching
+var searchRegExp = false; 	// enable RegExp searches
+
+
+if (window.addEventListener) {
+	window.addEventListener("load",initSearch,false); }
+else if (window.attachEvent) {
+	window.attachEvent("onload", initSearch); }
+
+function initSearch() {
+	// check for quick search table and searchfield
+	if (!document.getElementById('qs_table')||!document.getElementById('quicksearch')) { return; }
+
+	// load all the rows and sort into arrays
+	loadTableData();
+
+	//find the query field
+	qsfield = document.getElementById('qs_field');
+
+	// previous search term; used for speed optimisation
+	prevSearch = '';
+
+	//find statistics location
+	stats = document.getElementById('stat');
+	setStatistics(-1);
+
+	// set up preferences
+	initPreferences();
+
+	// shows the searchfield
+	document.getElementById('quicksearch').style.display = 'block';
+	document.getElementById('qs_field').onkeyup = quickSearch;
+}
+
+function loadTableData() {
+	// find table and appropriate rows
+	searchTable = document.getElementById('qs_table');
+	var allRows = searchTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+	// split all rows into entryRows and infoRows (e.g. abstract, comment, bibtex)
+	entryRows = new Array(); infoRows = new Array(); absRows = new Array(); revRows = new Array();
+
+	// get data from each row
+	entryRowsData = new Array(); absRowsData = new Array(); revRowsData = new Array();
+
+	BibTeXKeys = new Array();
+
+	for (var i=0, k=0, j=0; i<allRows.length;i++) {
+		if (allRows[i].className.match(/entry/)) {
+			entryRows[j] = allRows[i];
+			entryRowsData[j] = stripDiacritics(getTextContent(allRows[i]));
+			allRows[i].id ? BibTeXKeys[j] = allRows[i].id : allRows[i].id = 'autokey_'+j;
+			j ++;
+		} else {
+			infoRows[k++] = allRows[i];
+			// check for abstract/comment
+			if (allRows[i].className.match(/abstract/)) {
+				absRows.push(allRows[i]);
+				absRowsData[j-1] = stripDiacritics(getTextContent(allRows[i]));
+			} else if (allRows[i].className.match(/comment/)) {
+				revRows.push(allRows[i]);
+				revRowsData[j-1] = stripDiacritics(getTextContent(allRows[i]));
+			}
+		}
+	}
+	//number of entries and rows
+	numEntries = entryRows.length;
+	numInfo = infoRows.length;
+	numAbs = absRows.length;
+	numRev = revRows.length;
+}
+
+function quickSearch(){
+
+	tInput = qsfield;
+
+	if (tInput.value.length == 0) {
+		showAll();
+		setStatistics(-1);
+		qsfield.className = '';
+		return;
+	} else {
+		t = stripDiacritics(tInput.value);
+
+		if(!searchRegExp) { t = escapeRegExp(t); }
+
+		// only search for valid RegExp
+		try {
+			textRegExp = new RegExp(t,"i");
+			closeAllInfo();
+			qsfield.className = '';
+		}
+			catch(err) {
+			prevSearch = tInput.value;
+			qsfield.className = 'invalidsearch';
+			return;
+		}
+	}
+
+	// count number of hits
+	var hits = 0;
+
+	// start looping through all entry rows
+	for (var i = 0; cRow = entryRows[i]; i++){
+
+		// only show search the cells if it isn't already hidden OR if the search term is getting shorter, then search all
+		if(cRow.className.indexOf('noshow')==-1 || tInput.value.length <= prevSearch.length){
+			var found = false;
+
+			if (entryRowsData[i].search(textRegExp) != -1 || BibTeXKeys[i].search(textRegExp) != -1){
+				found = true;
+			} else {
+				if(searchAbstract && absRowsData[i]!=undefined) {
+					if (absRowsData[i].search(textRegExp) != -1){ found=true; }
+				}
+				if(searchComment && revRowsData[i]!=undefined) {
+					if (revRowsData[i].search(textRegExp) != -1){ found=true; }
+				}
+			}
+
+			if (found){
+				cRow.className = 'entry show';
+				hits++;
+			} else {
+				cRow.className = 'entry noshow';
+			}
+		}
+	}
+
+	// update statistics
+	setStatistics(hits)
+
+	// set previous search value
+	prevSearch = tInput.value;
+}
+
+
+// Strip Diacritics from text
+// http://stackoverflow.com/questions/990904/javascript-remove-accents-in-strings
+
+// String containing replacement characters for stripping accents
+var stripstring =
+    'AAAAAAACEEEEIIII'+
+    'DNOOOOO.OUUUUY..'+
+    'aaaaaaaceeeeiiii'+
+    'dnooooo.ouuuuy.y'+
+    'AaAaAaCcCcCcCcDd'+
+    'DdEeEeEeEeEeGgGg'+
+    'GgGgHhHhIiIiIiIi'+
+    'IiIiJjKkkLlLlLlL'+
+    'lJlNnNnNnnNnOoOo'+
+    'OoOoRrRrRrSsSsSs'+
+    'SsTtTtTtUuUuUuUu'+
+    'UuUuWwYyYZzZzZz.';
+
+function stripDiacritics(str){
+
+    if(noSquiggles==false){
+        return str;
+    }
+
+    var answer='';
+    for(var i=0;i<str.length;i++){
+        var ch=str[i];
+        var chindex=ch.charCodeAt(0)-192;   // Index of character code in the strip string
+        if(chindex>=0 && chindex<stripstring.length){
+            // Character is within our table, so we can strip the accent...
+            var outch=stripstring.charAt(chindex);
+            // ...unless it was shown as a '.'
+            if(outch!='.')ch=outch;
+        }
+        answer+=ch;
+    }
+    return answer;
+}
+
+// http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+// NOTE: must escape every \ in the export code because of the JabRef Export...
+function escapeRegExp(str) {
+  return str.replace(/[-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
+
+function toggleInfo(articleid,info) {
+
+	var entry = document.getElementById(articleid);
+	var abs = document.getElementById('abs_'+articleid);
+	var rev = document.getElementById('rev_'+articleid);
+	var bib = document.getElementById('bib_'+articleid);
+
+	if (abs && info == 'abstract') {
+		abs.className.indexOf('noshow') == -1?abs.className = 'abstract noshow':abs.className = 'abstract show';
+	} else if (rev && info == 'comment') {
+		rev.className.indexOf('noshow') == -1?rev.className = 'comment noshow':rev.className = 'comment show';
+	} else if (bib && info == 'bibtex') {
+		bib.className.indexOf('noshow') == -1?bib.className = 'bibtex noshow':bib.className = 'bibtex show';
+	} else {
+		return;
+	}
+
+	// check if one or the other is available
+	var revshow; var absshow; var bibshow;
+	(abs && abs.className.indexOf('noshow') == -1)? absshow = true: absshow = false;
+	(rev && rev.className.indexOf('noshow') == -1)? revshow = true: revshow = false;
+	(bib && bib.className.indexOf('noshow') == -1)? bibshow = true: bibshow = false;
+
+	// highlight original entry
+	if(entry) {
+		if (revshow || absshow || bibshow) {
+		entry.className = 'entry highlight show';
+		} else {
+		entry.className = 'entry show';
+		}
+	}
+
+	// When there's a combination of abstract/comment/bibtex showing, need to add class for correct styling
+	if(absshow) {
+		(revshow||bibshow)?abs.className = 'abstract nextshow':abs.className = 'abstract';
+	}
+	if (revshow) {
+		bibshow?rev.className = 'comment nextshow': rev.className = 'comment';
+	}
+
+}
+
+function setStatistics (hits) {
+	if(hits < 0) { hits=numEntries; }
+	if(stats) { stats.firstChild.data = hits + '/' + numEntries}
+}
+
+function getTextContent(node) {
+	// Function written by Arve Bersvendsen
+	// http://www.virtuelvis.com
+
+	if (node.nodeType == 3) {
+	return node.nodeValue;
+	} // text node
+	if (node.nodeType == 1 && node.className != "infolinks") { // element node
+	var text = [];
+	for (var chld = node.firstChild;chld;chld=chld.nextSibling) {
+		text.push(getTextContent(chld));
+	}
+	return text.join("");
+	} return ""; // some other node, won't contain text nodes.
+}
+
+function showAll(){
+	closeAllInfo();
+	for (var i = 0; i < numEntries; i++){ entryRows[i].className = 'entry show'; }
+}
+
+function closeAllInfo(){
+	for (var i=0; i < numInfo; i++){
+		if (infoRows[i].className.indexOf('noshow') ==-1) {
+			infoRows[i].className = infoRows[i].className + ' noshow';
+		}
+	}
+}
+
+function clearQS() {
+	qsfield.value = '';
+	showAll();
+}
+
+function redoQS(){
+	showAll();
+	quickSearch(qsfield);
+}
+
+function updateSetting(obj){
+	var option = obj.id;
+	var checked = obj.value;
+
+	switch(option)
+	 {
+	 case "opt_searchAbs":
+	   searchAbstract=!searchAbstract;
+	   redoQS();
+	   break;
+	 case "opt_searchComment":
+	   searchComment=!searchComment;
+	   redoQS();
+	   break;
+	 case "opt_useRegExp":
+	   searchRegExp=!searchRegExp;
+	   redoQS();
+	   break;
+	 case "opt_noAccents":
+	   noSquiggles=!noSquiggles;
+	   loadTableData();
+	   redoQS();
+	   break;
+	 }
+}
+
+function initPreferences(){
+	if(searchAbstract){document.getElementById("opt_searchAbs").checked = true;}
+	if(searchComment){document.getElementById("opt_searchComment").checked = true;}
+	if(noSquiggles){document.getElementById("opt_noAccents").checked = true;}
+	if(searchRegExp){document.getElementById("opt_useRegExp").checked = true;}
+
+	if(numAbs==0) {document.getElementById("opt_searchAbs").parentNode.style.display = 'none';}
+	if(numRev==0) {document.getElementById("opt_searchComment").parentNode.style.display = 'none';}
+}
+
+function toggleSettings(){
+	var togglebutton = document.getElementById('showsettings');
+	var settings = document.getElementById('settings');
+
+	if(settings.className == "hidden"){
+		settings.className = "show";
+		togglebutton.innerText = "close settings";
+		togglebutton.textContent = "close settings";
+	}else{
+		settings.className = "hidden";
+		togglebutton.innerText = "settings...";
+		togglebutton.textContent = "settings...";
+	}
+}
+
+-->
+</script>
+<style type="text/css">
+body { background-color: white; font-family: Arial, sans-serif; font-size: 13px; line-height: 1.2; padding: 1em; color: #2E2E2E; width: 50em; margin: auto auto; }
+
+form#quicksearch { width: auto; border-style: solid; border-color: gray; border-width: 1px 0px; padding: 0.7em 0.5em; display:none; position:relative; }
+span#searchstat {padding-left: 1em;}
+
+div#settings { margin-top:0.7em; /* border-bottom: 1px transparent solid; background-color: #efefef; border: 1px grey solid; */ }
+div#settings ul {margin: 0; padding: 0; }
+div#settings li {margin: 0; padding: 0 1em 0 0; display: inline; list-style: none; }
+div#settings li + li { border-left: 2px #efefef solid; padding-left: 0.5em;}
+div#settings input { margin-bottom: 0px;}
+
+div#settings.hidden {display:none;}
+
+#showsettings { border: 1px grey solid; padding: 0 0.5em; float:right; line-height: 1.6em; text-align: right; }
+#showsettings:hover { cursor: pointer; }
+
+.invalidsearch { background-color: red; }
+input[type="button"] { background-color: #efefef; border: 1px #2E2E2E solid;}
+
+table { border: 1px gray none; width: 100%; empty-cells: show; border-spacing: 0em 0.1em; margin: 1em 0em; }
+th, td { border: none; padding: 0.5em; vertical-align: top; text-align: justify; }
+
+td a { color: navy; text-decoration: none; }
+td a:hover  { text-decoration: underline; }
+
+tr.noshow { display: none;}
+tr.highlight td { background-color: #EFEFEF; border-top: 2px #2E2E2E solid; font-weight: bold; }
+tr.abstract td, tr.comment td, tr.bibtex td { background-color: #EFEFEF; text-align: justify; border-bottom: 2px #2E2E2E solid; }
+tr.nextshow td { border-bottom-style: none; }
+
+tr.bibtex pre { width: 100%; overflow: auto; white-space: pre-wrap;}
+p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
+
+@media print {
+	p.infolinks, #qs_settings, #quicksearch, t.bibtex { display: none !important; }
+	tr { page-break-inside: avoid; }
+}
+</style>
+
+<form action="" id="quicksearch">
+<input type="text" id="qs_field" autocomplete="off" placeholder="Type to search..." /> <input type="button" onclick="clearQS()" value="clear" />
+<span id="searchstat">Matching entries: <span id="stat">0</span></span>
+<div id="showsettings" onclick="toggleSettings()">settings...</div>
+<div id="settings" class="hidden">
+<ul>
+<li><input type="checkbox" class="search_setting" id="opt_searchAbs" onchange="updateSetting(this)"><label for="opt_searchAbs"> include abstract</label></li>
+<li><input type="checkbox" class="search_setting" id="opt_searchComment" onchange="updateSetting(this)"><label for="opt_searchComment"> include comment</label></li>
+<li><input type="checkbox" class="search_setting" id="opt_useRegExp" onchange="updateSetting(this)"><label for="opt_useRegExp"> use RegExp</label></li>
+<li><input type="checkbox" class="search_setting" id="opt_noAccents" onchange="updateSetting(this)"><label for="opt_noAccents"> ignore accents</label></li>
+</ul>
+</div>
+</form>
+<table id="qs_table" border="1">
+<tbody>
+<tr id="DGDNS21Cutting" class="entry">
+	<td>Devriendt J, Gocht S, Demirovi&cacute; E, Nordström J and Stuckey P (2021), <i>"Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35
+	<p class="infolinks">[<a href="javascript:toggleInfo('DGDNS21Cutting','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('DGDNS21Cutting','bibtex')">BibTeX</a>]</p>
+	</td>
+</tr>
+<tr id="abs_DGDNS21Cutting" class="abstract noshow">
+	<td><b>Abstract</b>: Core-guided techniques have revolutionized Boolean satisfiability<br>approaches to optimization problems (MaxSAT), but the process at the<br>heart of these methods, strengthening bounds on solutions by<br>repeatedly adding cardinality constraints, remains a bottleneck.<br>Cardinality constraints require significant work to be re-encoded to<br>SAT, and SAT solvers are notoriously weak at cardinality reasoning.<br>In this work, we lift core-guided search to pseudo-Boolean (PB)<br>solvers, which deal with more general PB optimization problems and<br>operate natively with cardinality constraints. The cutting planes<br>method used in such solvers allows us to derive stronger cardinality<br>constraints, which yield better updates to solution bounds, and the<br>increased efficiency of objective function reformulation also makes<br>it feasible to switch repeatedly between lower-bounding and<br>upper-bounding search.  A thorough evaluation on applied and crafted<br>benchmarks shows that our core-guided PB solver significantly<br>improves on the state of the art in pseudo-Boolean optimization.</td>
+</tr>
+<tr id="bib_DGDNS21Cutting" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DGDNS21Cutting,
+  author = {Jo Devriendt and Stephan Gocht and Demirovi&cacute;, Emir and Jakob Nordström and Peter Stuckey},
+  title = {Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  year = {2021},
+  volume = {35},
+  note = {To appear}
+}
+</pre></td>
+</tr>
+<tr id="GN21CertifyingParity" class="entry">
+	<td>Gocht S and Nordström J (2021), <i>"Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35
+	<p class="infolinks">[<a href="javascript:toggleInfo('GN21CertifyingParity','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('GN21CertifyingParity','bibtex')">BibTeX</a>]</p>
+	</td>
+</tr>
+<tr id="abs_GN21CertifyingParity" class="abstract noshow">
+	<td><b>Abstract</b>: The dramatic improvements in combinatorial optimization algorithms<br>over the last decades have had a major impact in artificial<br>intelligence, operations research, and beyond, but the output of<br>current state-of-the-art solvers is often hard to verify and is<br>sometimes wrong. For Boolean satisfiability (SAT) solvers proof<br>logging has been introduced as a way to certify correctness, but the<br>methods used seem hard to generalize to stronger paradigms. What is<br>more, even for enhanced SAT techniques such as parity (XOR) reasoning,<br>cardinality detection, and symmetry handling, it has remained beyond<br>reach to design practically efficient proofs in the standard DRAT<br>format. In this work, we show how to instead use pseudo-Boolean<br>inequalities with extension variables to concisely justify XOR<br>reasoning. Our experimental evaluation of a SAT solver integration<br>shows a dramatic decrease in proof logging and verification time<br>compared to existing DRAT methods. Since our method is a strict<br>generalization of DRAT, and readily lends itself to expressing also<br>0-1 programming and even constraint programming problems, we hope this<br>work points the way towards a unified approach for efficient<br>machine-verifiable proofs for a rich class of combinatorial<br>optimization paradigms.</td>
+</tr>
+<tr id="bib_GN21CertifyingParity" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{GN21CertifyingParity,
+  author = {Stephan Gocht and Jakob Nordström},
+  title = {Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  year = {2021},
+  volume = {35},
+  note = {To appear}
+}
+</pre></td>
+</tr>
+<tr id="Elffers2020" class="entry">
+	<td>Elffers J, Gocht S, McCreesh C and Nordstr&ouml;m J (2020), <i>"Justifying All Differences Using Pseudo-Boolean Reasoning"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 34(02), pp. 1486-1494. AAAI Press.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2020','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2020','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1609/aaai.v34i02.5507" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Elffers2020" class="abstract noshow">
+	<td><b>Abstract</b>: Constraint programming solvers support rich global constraints and propagators, which make them both powerful and<br>hard to debug. In the Boolean satisfiability community, prooflogging is the standard solution for generating trustworthy<br>outputs, and this has become key to the social acceptability<br>of computer-generated proofs. However, reusing this technology for constraint programming requires either much weaker<br>propagation, or an impractical blowup in proof length. This<br>paper demonstrates that simple, clean, and efficient proof logging is still possible for the all-different constraint, through<br>pseudo-Boolean reasoning. We explain how such proofs can<br>be expressed and verified mechanistically, describe an implementation, and discuss the broader implications for proof logging in constraint programming.</td>
+</tr>
+<tr id="bib_Elffers2020" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Elffers2020,
+  author = {Jan Elffers and Stephan Gocht and Ciaran McCreesh and Jakob Nordstr&ouml;m},
+  title = {Justifying All Differences Using Pseudo-Boolean Reasoning},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  publisher = {AAAI Press},
+  year = {2020},
+  volume = {34},
+  number = {02},
+  pages = {1486--1494},
+  url = {https://doi.org/10.1609/aaai.v34i02.5507}
+}
+</pre></td>
+</tr>
+<tr id="DBLP:conf/cp/GochtMMNPT20" class="entry">
+	<td>Gocht S, McBride R, McCreesh C, Nordstr&ouml;m J, Prosser P and Trimble J (2020), <i>"Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems"</i>, In Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020.  Vol. 12333, pp. 338-357. Springer.
+	<p class="infolinks">[<a href="javascript:toggleInfo('DBLP:conf/cp/GochtMMNPT20','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('DBLP:conf/cp/GochtMMNPT20','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1007/978-3-030-58475-7\_20" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_DBLP:conf/cp/GochtMMNPT20" class="abstract noshow">
+	<td><b>Abstract</b>: An algorithm is said to be certifying if it outputs, together with a solution to the problem it solves, a proof that this solution is correct. We explain how state of the art maximum clique, maximum weighted clique, maximal clique enumeration and maximum common (connected) induced subgraph algorithms can be turned into certifying solvers by using pseudo-Boolean models and cutting planes proofs, and demonstrate that this approach can also handle reductions between problems. The generality of our results suggests that this method is ready for widespread adoption in solvers for combinatorial graph problems.</td>
+</tr>
+<tr id="bib_DBLP:conf/cp/GochtMMNPT20" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DBLP:conf/cp/GochtMMNPT20,
+  author = {Stephan Gocht and Ross McBride and Ciaran McCreesh and Jakob Nordstr&ouml;m and Patrick Prosser and James Trimble},
+  editor = {Helmut Simonis},
+  title = {Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems},
+  booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020},
+  publisher = {Springer},
+  year = {2020},
+  volume = {12333},
+  pages = {338--357},
+  url = {https://doi.org/10.1007/978-3-030-58475-720}
+}
+</pre></td>
+</tr>
+<tr id="Gocht2020" class="entry">
+	<td>Gocht S, McCreesh C and Nordström J (2020), <i>"Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions"</i>, In Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20. , pp. 1134-1140.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2020','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2020','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.24963/ijcai.2020/158" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Gocht2020" class="abstract noshow">
+	<td><b>Abstract</b>: Modern subgraph isomorphism solvers carry out<br>sophisticated reasoning using graph invariants such<br>as degree sequences and path counts. We show that<br>all of this reasoning can be justified compactly using the cutting planes proofs studied in complexity theory. This allows us to extend a state of the<br>art subgraph isomorphism enumeration solver with<br>proof logging support, so that the solutions it outputs may be audited and verified for correctness and<br>completeness by a simple third party tool which<br>knows nothing about graph theory</td>
+</tr>
+<tr id="bib_Gocht2020" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Gocht2020,
+  author = {Gocht, Stephan and McCreesh, Ciaran and Nordström, Jakob},
+  title = {Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions},
+  booktitle = {Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20},
+  year = {2020},
+  pages = {1134--1140},
+  url = {https://doi.org/10.24963/ijcai.2020/158}
+}
+</pre></td>
+</tr>
+<tr id="DBLP:conf/cav/SoosGM20" class="entry">
+	<td>Soos M, Gocht S and Meel KS (2020), <i>"Tinted, Detached, and Lazy CNF-XOR Solving and Its Applications to Counting and Sampling"</i>, In Computer Aided Verification, CAV 2020.  Vol. 12224, pp. 463-484. Springer.
+	<p class="infolinks">[<a href="javascript:toggleInfo('DBLP:conf/cav/SoosGM20','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('DBLP:conf/cav/SoosGM20','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1007/978-3-030-53288-8_22" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_DBLP:conf/cav/SoosGM20" class="abstract noshow">
+	<td><b>Abstract</b>: Given a Boolean formula, the problem of counting seeks to estimate the<br>number of solutions of F while the problem of uniform sampling seeks<br>to sample solutions uniformly at random. Counting and uniform sampling<br>are fundamental problems in computer science with a wide range of<br>applications ranging from constrained random simulation, probabilistic<br>inference to network reliability and beyond. The past few years have<br>witnessed the rise of hashing-based approaches that use XORbased<br>hashing and employ SAT solvers to solve the resulting CNF formulas<br>conjuncted with XOR constraints. Since over 99% of the runtime of<br>hashing-based techniques is spent inside the SAT queries, improving<br>CNF-XOR solvers has emerged as a key challenge.<br>In this paper, we identify the key performance bottlenecks in the<br>recently proposed BIRD architecture, and we focus on overcoming these<br>bottlenecks by accelerating the XOR handling within the SAT solver and<br>on improving the solver integration through a smarter use of (partial)<br>solutions. We integrate the resulting system, called BIRD2, with the<br>state of the art approximate model counter, ApproxMC3, and the state<br>of the art almost-uniform model sampler UniGen2. Through an extensive<br>evaluation over a large benchmark set of over 1896 instances, we<br>observe that BIRD2 leads to consistent speed up for both counting and<br>sampling, and in particular, we solve 77 and 51 more instances for<br>counting and sampling respectively.</td>
+</tr>
+<tr id="bib_DBLP:conf/cav/SoosGM20" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DBLP:conf/cav/SoosGM20,
+  author = {Mate Soos and Stephan Gocht and Kuldeep S. Meel},
+  title = {Tinted, Detached, and Lazy CNF-XOR Solving and Its Applications to Counting and Sampling},
+  booktitle = {Computer Aided Verification, CAV 2020},
+  publisher = {Springer},
+  year = {2020},
+  volume = {12224},
+  pages = {463--484},
+  url = {https://doi.org/10.1007/978-3-030-53288-8_22}
+}
+</pre></td>
+</tr>
+<tr id="Beckert2019" class="entry">
+	<td>Beckert B, Bormer T, Gocht S, Herda M, Lentzsch D and Ulbrich M (2019), <i>"Using Relational Verification for Program Slicing"</i>, In Software Engineering and Formal Methods. SEFM 2019.  Vol. 11724, pp. 353-372.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Beckert2019','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Beckert2019','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1007/978-3-030-30446-1_19" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Beckert2019" class="abstract noshow">
+	<td><b>Abstract</b>: Program slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are minimal in size, the program's semantics must be considered. Existing approaches that go beyond a syntactical analysis and do take the semantics into account are not fully automatic and require auxiliary specifications from the user. In this paper, we adapt relational verification to check whether a slice candidate obtained by removing some instructions from a program is indeed a valid slice. Based on this, we propose a framework for precise and automatic program slicing. As part of this framework, we present three strategies for the generation of slice candidates, and we show how dynamic slicing approaches -- that interweave generating and checking slice candidates -- can be used for this purpose. The framework can easily be extended with other strategies for generating slice candidates. We discuss the strengths and weaknesses of slicing approaches that use our framework.</td>
+</tr>
+<tr id="bib_Beckert2019" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Beckert2019,
+  author = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattias},
+  title = {Using Relational Verification for Program Slicing},
+  booktitle = {Software Engineering and Formal Methods. SEFM 2019},
+  year = {2019},
+  volume = {11724},
+  pages = {353--372},
+  url = {https://doi.org/10.1007/978-3-030-30446-1_19}
+}
+</pre></td>
+</tr>
+<tr id="Gocht2019" class="entry">
+	<td>Gocht S, Nordström J and Yehudayoff A (2019), <i>"On Division Versus Saturation in Pseudo-Boolean Solving"</i>, In Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19. , pp. 1711-1718.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2019','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2019','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.24963/ijcai.2019/237" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Gocht2019" class="abstract noshow">
+	<td><b>Abstract</b>: The conflict-driven clause learning (CDCL) paradigm has revolutionized SAT solving over the last two decades. Extending this approach to pseudo-Boolean (PB) solvers doing 0-1 linear programming holds the promise of further exponential improvements in theory, but intriguingly such gains have not materialized in practice. Also intriguingly, most PB extensions of CDCL use not the division rule in cutting planes as defined in [Cook et al., '87] but instead the so-called saturation rule. To the best of our knowledge, there has been no study comparing the strengths of division and saturation in the context of conflict-driven PB learning, when all linear combinations of inequalities are required to cancel variables. We show that PB solvers with division instead of saturation can be exponentially stronger. In the other direction, we prove that simulating a single saturation step can require an exponential number of divisions. We also perform some experiments to see whether these phenomena can be observed in actual solvers. Our conclusion is that a careful combination of division and saturation seems to be crucial to harness more of the power of cutting planes.s</td>
+</tr>
+<tr id="bib_Gocht2019" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Gocht2019,
+  author = {Gocht, Stephan and Nordström, Jakob and Yehudayoff, Amir},
+  title = {On Division Versus Saturation in Pseudo-Boolean Solving},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19},
+  year = {2019},
+  pages = {1711--1718},
+  url = {https://doi.org/10.24963/ijcai.2019/237}
+}
+</pre></td>
+</tr>
+<tr id="Elffers2018" class="entry">
+	<td>Elffers J, Gir&aacute;ldez-Cru J, Gocht S, Nordstr&ouml;m J and Simon L (2018), <i>"Seeking Practical CDCL Insights from Theoretical SAT Benchmarks."</i>, In Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI-18. , pp. 1300-1308.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2018','bibtex')">BibTeX</a>] [<a href="https://www.ijcai.org/proceedings/2018/181" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Elffers2018" class="abstract noshow">
+	<td><b>Abstract</b>: Over the last decades Boolean satisfiability (SAT)<br>solvers based on conflict-driven clause learning<br>(CDCL) have developed to the point where they can<br>handle formulas with millions of variables. Yet a<br>deeper understanding of how these solvers can be<br>so successful has remained elusive. In this work<br>we shed light on CDCL performance by using theoretical<br>benchmarks, which have the attractive features<br>of being a) scalable, b) extremal with respect<br>to different proof search parameters, and c) theoretically<br>easy in the sense of having short proofs in the<br>resolution proof system underlying CDCL. This allows<br>for a systematic study of solver heuristics and<br>how efficiently they search for proofs. We report<br>results from extensive experiments on a wide range<br>of benchmarks. Our findings include several examples<br>where theory predicts and explains CDCL behaviour,<br>but also raise a number of intriguing questions<br>for further study.</td>
+</tr>
+<tr id="bib_Elffers2018" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Elffers2018,
+  author = {Elffers, Jan and Gir&aacute;ldez-Cru, Jes&uacute;s and Gocht, Stephan and Nordstr&ouml;m, Jakob and Simon, Laurent},
+  title = {Seeking Practical CDCL Insights from Theoretical SAT Benchmarks.},
+  booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, IJCAI-18},
+  year = {2018},
+  pages = {1300--1308},
+  url = {https://www.ijcai.org/proceedings/2018/181}
+}
+</pre></td>
+</tr>
+<tr id="Vinyals2018" class="entry">
+	<td>Vinyals M, Elffers J, Gir&aacute;ldez-Cru J, Gocht S and Nordstr&ouml;m J (2018), <i>"In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving"</i>, In International Conference on Theory and Applications of Satisfiability Testing. , pp. 292-310.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Vinyals2018','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Vinyals2018','bibtex')">BibTeX</a>] [<a href="https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Vinyals2018" class="abstract noshow">
+	<td><b>Abstract</b>: We initiate a proof complexity theoretic study of subsystems of<br>cutting planes (CP) modelling proof search in conflict-driven pseudo-<br>Boolean (PB) solvers. These algorithms combine restrictions such as<br>that addition of constraints should always cancel a variable and/or<br>that so-called saturation is used instead of division. It is known<br>that on CNF inputs cutting planes with cancelling addition and<br>saturation is essentially just resolution. We show that even if<br>general addition is allowed, this proof system is still polynomially<br>simulated by resolution with respect to proof size as long as<br>coefficients are polynomially bounded.<br>As a further way of delineating the proof power of subsystems of CP,<br>we propose to study a number of easy (but tricky) instances of<br>problems in NP. Most of the formulas we consider have short and simple<br>tree-like proofs in general CP, but the restricted subsystems seem to<br>reveal a much more varied landscape. Although we are not able to<br>formally establish separations between different subsystems of<br>CP---which would require major technical breakthroughs in proof<br>complexity---these formulas appear to be good candidates for obtaining<br>such separations. We believe that a closer study of these benchmarks<br>is a promising approach for shedding more light on the reasoning power<br>of pseudo-Boolean solvers.</td>
+</tr>
+<tr id="bib_Vinyals2018" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Vinyals2018,
+  author = {Vinyals, Marc and Elffers, Jan and Gir&aacute;ldez-Cru, Jes&uacute;s and Gocht, Stephan and Nordstr&ouml;m, Jakob},
+  title = {In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving},
+  booktitle = {International Conference on Theory and Applications of Satisfiability Testing},
+  year = {2018},
+  pages = {292--310},
+  url = {https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18}
+}
+</pre></td>
+</tr>
+<tr id="Beckert2017" class="entry">
+	<td>Beckert B, Bormer T, Gocht S, Herda M, Lentzsch D and Ulbrich M (2017), <i>"SemSlice: Exploiting Relational Verification for Automatic Program Slicing"</i>, In Integrated Formal Methods. , pp. 312-319.
+	<p class="infolinks">[<a href="javascript:toggleInfo('Beckert2017','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Beckert2017','bibtex')">BibTeX</a>] [<a href="https://link.springer.com/chapter/10.1007/978-3-319-66845-1_20" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_Beckert2017" class="abstract noshow">
+	<td><b>Abstract</b>: We present SemSlice, a tool which automatically produces very precise slices for C routines. Slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are close to the minimal number of statements, the program's semantics must be considered. SemSlice is based on automatic relational regression verification, which SemSlice uses to select valid slices from a set of candidate slices. We present several approaches for producing candidates for precise slices. Evaluation shows that regression verification (based on coupling invariant inference) is a powerful tool for semantics-aware slicing: precise slices for typical slicing challenges can be found automatically and fast.</td>
+</tr>
+<tr id="bib_Beckert2017" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{Beckert2017,
+  author = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattiasg},
+  title = {SemSlice: Exploiting Relational Verification for Automatic Program Slicing},
+  booktitle = {Integrated Formal Methods},
+  year = {2017},
+  pages = {312--319},
+  url = {https://link.springer.com/chapter/10.1007/978-3-319-66845-1_20}
+}
+</pre></td>
+</tr>
+<tr id="gocht2017incremental" class="entry">
+	<td>Gocht S (2017), <i>"Incremental SAT Solving for SAT Based Planning"</i>. Thesis at: Karlsruhe Institute of Technology (KIT).
+	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2017incremental','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2017incremental','bibtex')">BibTeX</a>] [<a href="https://algo2.iti.kit.edu/3324.php" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_gocht2017incremental" class="abstract noshow">
+	<td><b>Abstract</b>: One of the most successful approaches to automated planning is the translation to proposi-<br>tional satisfiability (SAT). This thesis evaluates incremental SAT solving for several modern<br>encodings for SAT based planning.<br>Experiments based on benchmarks from the 2014 International Planning Competition<br>show that an incremental approach significantly outperforms non-incremental solving.<br>Although, planning specific heuristics and advanced scheduling of makespans is not used,<br>it is possible to outperform the state-of-the-art SAT based planning systems Madagascar<br>and PDRPlan in the number of solved instances.</td>
+</tr>
+<tr id="bib_gocht2017incremental" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@thesis{gocht2017incremental,
+  author = {Gocht, Stephan},
+  title = {Incremental SAT Solving for SAT Based Planning},
+  school = {Karlsruhe Institute of Technology (KIT)},
+  year = {2017},
+  url = {https://algo2.iti.kit.edu/3324.php}
+}
+</pre></td>
+</tr>
+<tr id="gocht2017accelerating" class="entry">
+	<td>Gocht S and Balyo T (2017), <i>"Accelerating SAT Based Planning with Incremental SAT Solving"</i>, In Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling (ICAPS 2017). , pp. 135-139.
+	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2017accelerating','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2017accelerating','bibtex')">BibTeX</a>] [<a href="https://www.aaai.org/ocs/index.php/ICAPS/ICAPS17/paper/view/15580" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_gocht2017accelerating" class="abstract noshow">
+	<td><b>Abstract</b>: One of the most successful approaches to automated plan-<br>ning is the translation to propositional satisfiability (SAT).<br>We employ incremental SAT solving to increase the capabili-<br>ties of several modern encodings for SAT based planning. Ex-<br>periments based on benchmarks from the 2014 International<br>Planning Competition show that an incremental approach sig-<br>nificantly outperforms non incremental solving. Although we<br>are using sequential scheduling of makespans, we can outper-<br>form the state-of-the-art SAT based planning system Mada-<br>gascar in the number of solved instances.</td>
+</tr>
+<tr id="bib_gocht2017accelerating" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{gocht2017accelerating,
+  author = {Gocht, Stephan and Balyo, Tom&aacute;&scaron;},
+  title = {Accelerating SAT Based Planning with Incremental SAT Solving},
+  booktitle = {Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling (ICAPS 2017)},
+  year = {2017},
+  pages = {135--139},
+  url = {https://www.aaai.org/ocs/index.php/ICAPS/ICAPS17/paper/view/15580}
+}
+</pre></td>
+</tr>
+<tr id="gocht2014refinement" class="entry">
+	<td>Gocht S (2014), <i>"Refinement of Path Conditions for Information Flow Analysis"</i>. Thesis at: Karlsruhe Institute of Technology (KIT).
+	<p class="infolinks">[<a href="javascript:toggleInfo('gocht2014refinement','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('gocht2014refinement','bibtex')">BibTeX</a>] [<a href="https://asa.iti.kit.edu/130_441.php" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_gocht2014refinement" class="abstract noshow">
+	<td><b>Abstract</b>: Path conditions are a static analysis tool for information flow control (IFC). They can be<br>used to produce witnesses for an illegal flow, which do not necessarily represent a concrete<br>execution of the program. This bachelor thesis will provide a detailed approach to eliminate<br>these false witnesses using counterexample guided abstraction refinement (CEGAR) and<br>thereby increase precision.<br>As not all values satisfying the PC need to occur simultaneously during a program execution,<br>a property is introduced which is true iff the values occur during the program execution.<br>Some values are always occurring simultaneously if a flow exists. This information can be<br>used to increase precision and is added to the described property, without using temporal<br>logic. Finally, the CEGAR approach is adopted to provide an algorithm for checking this<br>property.</td>
+</tr>
+<tr id="bib_gocht2014refinement" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@thesis{gocht2014refinement,
+  author = {Gocht, Stephan},
+  title = {Refinement of Path Conditions for Information Flow Analysis},
+  school = {Karlsruhe Institute of Technology (KIT)},
+  year = {2014},
+  url = {https://asa.iti.kit.edu/130_441.php}
+}
+</pre></td>
+</tr>
+</tbody>
+</table>
+<footer>
+ <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 19/03/2021.</small>
+</footer>
+<!-- file generated by JabRef -->
