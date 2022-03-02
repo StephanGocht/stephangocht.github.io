@@ -19,7 +19,7 @@
 
 // Search settings
 var searchAbstract = true;	// search in abstract
-var searchComment = true;	// search in comment
+var searchReview = true;	// search in review
 
 var noSquiggles = true; 	// ignore diacritics when searching
 var searchRegExp = false; 	// enable RegExp searches
@@ -60,7 +60,7 @@ function loadTableData() {
 	searchTable = document.getElementById('qs_table');
 	var allRows = searchTable.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
 
-	// split all rows into entryRows and infoRows (e.g. abstract, comment, bibtex)
+	// split all rows into entryRows and infoRows (e.g. abstract, review, bibtex)
 	entryRows = new Array(); infoRows = new Array(); absRows = new Array(); revRows = new Array();
 
 	// get data from each row
@@ -76,11 +76,11 @@ function loadTableData() {
 			j ++;
 		} else {
 			infoRows[k++] = allRows[i];
-			// check for abstract/comment
+			// check for abstract/review
 			if (allRows[i].className.match(/abstract/)) {
 				absRows.push(allRows[i]);
 				absRowsData[j-1] = stripDiacritics(getTextContent(allRows[i]));
-			} else if (allRows[i].className.match(/comment/)) {
+			} else if (allRows[i].className.match(/review/)) {
 				revRows.push(allRows[i]);
 				revRowsData[j-1] = stripDiacritics(getTextContent(allRows[i]));
 			}
@@ -136,7 +136,7 @@ function quickSearch(){
 				if(searchAbstract && absRowsData[i]!=undefined) {
 					if (absRowsData[i].search(textRegExp) != -1){ found=true; } 
 				}
-				if(searchComment && revRowsData[i]!=undefined) {
+				if(searchReview && revRowsData[i]!=undefined) {
 					if (revRowsData[i].search(textRegExp) != -1){ found=true; } 
 				}
 			}
@@ -212,8 +212,8 @@ function toggleInfo(articleid,info) {
 	
 	if (abs && info == 'abstract') {
 		abs.className.indexOf('noshow') == -1?abs.className = 'abstract noshow':abs.className = 'abstract show';
-	} else if (rev && info == 'comment') {
-		rev.className.indexOf('noshow') == -1?rev.className = 'comment noshow':rev.className = 'comment show';
+	} else if (rev && info == 'review') {
+		rev.className.indexOf('noshow') == -1?rev.className = 'review noshow':rev.className = 'review show';
 	} else if (bib && info == 'bibtex') {
 		bib.className.indexOf('noshow') == -1?bib.className = 'bibtex noshow':bib.className = 'bibtex show';
 	} else { 
@@ -235,12 +235,12 @@ function toggleInfo(articleid,info) {
 		}
 	}
 	
-	// When there's a combination of abstract/comment/bibtex showing, need to add class for correct styling
+	// When there's a combination of abstract/review/bibtex showing, need to add class for correct styling
 	if(absshow) {
 		(revshow||bibshow)?abs.className = 'abstract nextshow':abs.className = 'abstract';
 	} 
 	if (revshow) {
-		bibshow?rev.className = 'comment nextshow': rev.className = 'comment';
+		bibshow?rev.className = 'review nextshow': rev.className = 'review';
 	}	
 	
 }
@@ -299,8 +299,8 @@ function updateSetting(obj){
 	   searchAbstract=!searchAbstract;
 	   redoQS();
 	   break;
-	 case "opt_searchComment":
-	   searchComment=!searchComment;
+	 case "opt_searchRev":
+	   searchReview=!searchReview;
 	   redoQS();
 	   break;
 	 case "opt_useRegExp":
@@ -317,12 +317,12 @@ function updateSetting(obj){
 
 function initPreferences(){
 	if(searchAbstract){document.getElementById("opt_searchAbs").checked = true;}
-	if(searchComment){document.getElementById("opt_searchComment").checked = true;}
+	if(searchReview){document.getElementById("opt_searchRev").checked = true;}
 	if(noSquiggles){document.getElementById("opt_noAccents").checked = true;}
 	if(searchRegExp){document.getElementById("opt_useRegExp").checked = true;}
 	
 	if(numAbs==0) {document.getElementById("opt_searchAbs").parentNode.style.display = 'none';}
-	if(numRev==0) {document.getElementById("opt_searchComment").parentNode.style.display = 'none';}	
+	if(numRev==0) {document.getElementById("opt_searchRev").parentNode.style.display = 'none';}	
 }
 
 function toggleSettings(){
@@ -369,7 +369,7 @@ td a:hover  { text-decoration: underline; }
 
 tr.noshow { display: none;}
 tr.highlight td { background-color: #EFEFEF; border-top: 2px #2E2E2E solid; font-weight: bold; }
-tr.abstract td, tr.comment td, tr.bibtex td { background-color: #EFEFEF; text-align: justify; border-bottom: 2px #2E2E2E solid; }
+tr.abstract td, tr.review td, tr.bibtex td { background-color: #EFEFEF; text-align: justify; border-bottom: 2px #2E2E2E solid; }
 tr.nextshow td { border-bottom-style: none; }
 
 tr.bibtex pre { width: 100%; overflow: auto; white-space: pre-wrap;}
@@ -388,7 +388,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <div id="settings" class="hidden">
 <ul>
 <li><input type="checkbox" class="search_setting" id="opt_searchAbs" onchange="updateSetting(this)"><label for="opt_searchAbs"> include abstract</label></li>
-<li><input type="checkbox" class="search_setting" id="opt_searchComment" onchange="updateSetting(this)"><label for="opt_searchComment"> include comment</label></li>
+<li><input type="checkbox" class="search_setting" id="opt_searchRev" onchange="updateSetting(this)"><label for="opt_searchRev"> include review</label></li>
 <li><input type="checkbox" class="search_setting" id="opt_useRegExp" onchange="updateSetting(this)"><label for="opt_useRegExp"> use RegExp</label></li>
 <li><input type="checkbox" class="search_setting" id="opt_noAccents" onchange="updateSetting(this)"><label for="opt_noAccents"> ignore accents</label></li>
 </ul>
@@ -397,15 +397,21 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <table id="qs_table" border="1">
 <tbody>
 <tr id="BGMN2022Dominance" class="entry">
-	<td>Bogaerts B, Gocht S, McCreesh C and Nordström J (2022), <i>"Certified Symmetry and Dominance Breaking for Combinatorial Optimisation"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35(5), pp. To appear.
-	<p class="infolinks">[<a href="javascript:toggleInfo('BGMN2022Dominance','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('BGMN2022Dominance','comment')">Comment</a>]  [<a href="javascript:toggleInfo('BGMN2022Dominance','bibtex')">BibTeX</a>] [<a href="paper/draft_dominance.pdf" target="_blank">PDF</a>]</p>
-	</td>
+    <td>Bogaerts, B., Gocht, S., McCreesh, C. and Nordström, J. 2022.
+    Certified Symmetry and Dominance Breaking for Combinatorial Optimisation.
+    <i>In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)</i>, Vol. 36. To appear. Distinguished paper.
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('BGMN2022Dominance','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('BGMN2022Dominance','bibtex')">BibTeX</a>]
+    
+    
+     [<a href="paper/draft_dominance.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_BGMN2022Dominance" class="abstract noshow">
-	<td><b>Abstract</b>: Symmetry and dominance breaking can be crucial for solving <br>hard combinatorial search and optimisation problems, but<br>the correctness of these techniques sometimes relies on subtle<br>arguments. For this reason, it is desirable to produce efficient,<br>machine-verifiable certificates that solutions have been<br>computed correctly. Building on the cutting planes proof system,<br>we develop a certification method for optimisation problems in<br>which symmetry and dominance breaking are easily<br>expressible. Our experimental evaluation demonstrates that<br>we can efficiently verify fully general symmetry breaking in<br>Boolean satisfiability (SAT) solving, thus providing, for the<br>first time, a unified method to certify a range of advanced SAT<br>techniques that also includes XOR and cardinality reasoning.<br>In addition, we apply our method to maximum clique solving<br>and constraint programming as a proof of concept that the<br>approach applies to a wider range of combinatorial problems.</td>
-</tr>
-<tr id="rev_BGMN2022Dominance" class="comment noshow">
-	<td><b>Comment</b>: distinguished paper</td>
+    <td><b>Abstract</b>: Symmetry and dominance breaking can be crucial for solving <br>hard combinatorial search and optimisation problems, but<br>the correctness of these techniques sometimes relies on subtle<br>arguments. For this reason, it is desirable to produce efficient,<br>machine-verifiable certificates that solutions have been<br>computed correctly. Building on the cutting planes proof system,<br>we develop a certification method for optimisation problems in<br>which symmetry and dominance breaking are easily<br>expressible. Our experimental evaluation demonstrates that<br>we can efficiently verify fully general symmetry breaking in<br>Boolean satisfiability (SAT) solving, thus providing, for the<br>first time, a unified method to certify a range of advanced SAT<br>techniques that also includes XOR and cardinality reasoning.<br>In addition, we apply our method to maximum clique solving<br>and constraint programming as a proof of concept that the<br>approach applies to a wider range of combinatorial problems.</td>
 </tr>
 <tr id="bib_BGMN2022Dominance" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -413,18 +419,23 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{BGMN2022Dominance,
   author = {Bart Bogaerts and Stephan Gocht and Ciaran McCreesh and Jakob Nordström},
   title = {Certified Symmetry and Dominance Breaking for Combinatorial Optimisation},
-  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)},
   year = {2022},
-  volume = {35},
-  number = {5},
-  pages = {To appear},
-  url = {paper/draft_dominance.pdf}
+  volume = {36}
 }
 </pre></td>
-</tr>
-<tr id="GNMO2022Translations" class="entry">
-	<td>Gocht S, Nordström J, Martins R and Oertel A (2022), <i>"Certified CNF Translations for Pseudo-Boolean Solving"</i>, In Under review.
-	<p class="infolinks">[<a href="javascript:toggleInfo('GNMO2022Translations','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('GNMO2022Translations','bibtex')">BibTeX</a>] [<a href="paper/draft_translations.pdf" target="_blank">PDF</a>]</p>
+</tr><tr id="GNMO2022Translations" class="entry">
+	<td>Gocht, S., Nordström, J., Martins, R. and Oertel, A. 2022.
+    Certified CNF Translations for Pseudo-Boolean Solving.
+    Submitted manuscript.
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('GNMO2022Translations','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('GNMO2022Translations','bibtex')">BibTeX</a>]
+    
+    
+     [<a href="paper/draft_translations.pdf" target="_blank">PDF</a>]</p>
 	</td>
 </tr>
 <tr id="abs_GNMO2022Translations" class="abstract noshow">
@@ -433,22 +444,61 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <tr id="bib_GNMO2022Translations" class="bibtex noshow">
 <td><b>BibTeX</b>:
 <pre>
-@inproceedings{GNMO2022Translations,
+@unpublished{GNMO2022Translations,
   author = {Stephan Gocht and Jakob Nordström and Ruben Martins and Andy Oertel},
   title = {Certified CNF Translations for Pseudo-Boolean Solving},
   booktitle = {Under review},
-  year = {2022},
-  url = {paper/draft_translations.pdf}
+  year = {2022}
 }
 </pre></td>
 </tr>
-<tr id="GN21CertifyingParity" class="entry">
-	<td>Gocht S and Nordström J (2021), <i>"Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 35(5), pp. 3768-3777.
-	<p class="infolinks">[<a href="javascript:toggleInfo('GN21CertifyingParity','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('GN21CertifyingParity','bibtex')">BibTeX</a>] [<a href="paper/parity.pdf" target="_blank">PDF</a>]</p>
-	</td>
+<tr id="DGDNS21Cutting" class="entry">
+    <td>Devriendt, J., Gocht, S., Demirovi&cacute;, Emir, Nordström, J. and Stuckey, P. 2021.
+    Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning.
+    <i>In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)</i>, Vol. 35, No. 5, pp. 3768-3777. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('DGDNS21Cutting','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('DGDNS21Cutting','bibtex')">BibTeX</a>]
+    
+     [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/16494" target="_blank">URL</a>]
+     [<a href="paper/coreguided.pdf" target="_blank">PDF</a>]</p>
+    </td>
+</tr>
+<tr id="abs_DGDNS21Cutting" class="abstract noshow">
+    <td><b>Abstract</b>: Core-guided techniques have revolutionized Boolean satisfiability<br>approaches to optimization problems (MaxSAT), but the process at the<br>heart of these methods, strengthening bounds on solutions by<br>repeatedly adding cardinality constraints, remains a bottleneck.<br>Cardinality constraints require significant work to be re-encoded to<br>SAT, and SAT solvers are notoriously weak at cardinality reasoning.<br>In this work, we lift core-guided search to pseudo-Boolean (PB)<br>solvers, which deal with more general PB optimization problems and<br>operate natively with cardinality constraints. The cutting planes<br>method used in such solvers allows us to derive stronger cardinality<br>constraints, which yield better updates to solution bounds, and the<br>increased efficiency of objective function reformulation also makes<br>it feasible to switch repeatedly between lower-bounding and<br>upper-bounding search.  A thorough evaluation on applied and crafted<br>benchmarks shows that our core-guided PB solver significantly<br>improves on the state of the art in pseudo-Boolean optimization.</td>
+</tr>
+<tr id="bib_DGDNS21Cutting" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{DGDNS21Cutting,
+  author = {Jo Devriendt and Stephan Gocht and Demirovi&cacute; and Emir and Jakob Nordström and Peter Stuckey},
+  title = {Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)},
+  year = {2021},
+  volume = {35},
+  number = {5},
+  pages = {3768--3777},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/16494}
+}
+</pre></td>
+</tr><tr id="GN21CertifyingParity" class="entry">
+    <td>Gocht, S. and Nordström, J. 2021.
+    Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs.
+    <i>In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)</i>, Vol. 35, No. 5, pp. 3768-3777. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('GN21CertifyingParity','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('GN21CertifyingParity','bibtex')">BibTeX</a>]
+    
+    
+     [<a href="paper/parity.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_GN21CertifyingParity" class="abstract noshow">
-	<td><b>Abstract</b>: The dramatic improvements in combinatorial optimization algorithms<br>over the last decades have had a major impact in artificial<br>intelligence, operations research, and beyond, but the output of<br>current state-of-the-art solvers is often hard to verify and is<br>sometimes wrong. For Boolean satisfiability (SAT) solvers proof<br>logging has been introduced as a way to certify correctness, but the<br>methods used seem hard to generalize to stronger paradigms. What is<br>more, even for enhanced SAT techniques such as parity (XOR) reasoning,<br>cardinality detection, and symmetry handling, it has remained beyond<br>reach to design practically efficient proofs in the standard DRAT<br>format. In this work, we show how to instead use pseudo-Boolean<br>inequalities with extension variables to concisely justify XOR<br>reasoning. Our experimental evaluation of a SAT solver integration<br>shows a dramatic decrease in proof logging and verification time<br>compared to existing DRAT methods. Since our method is a strict<br>generalization of DRAT, and readily lends itself to expressing also<br>0-1 programming and even constraint programming problems, we hope this<br>work points the way towards a unified approach for efficient<br>machine-verifiable proofs for a rich class of combinatorial<br>optimization paradigms.</td>
+    <td><b>Abstract</b>: The dramatic improvements in combinatorial optimization algorithms<br>over the last decades have had a major impact in artificial<br>intelligence, operations research, and beyond, but the output of<br>current state-of-the-art solvers is often hard to verify and is<br>sometimes wrong. For Boolean satisfiability (SAT) solvers proof<br>logging has been introduced as a way to certify correctness, but the<br>methods used seem hard to generalize to stronger paradigms. What is<br>more, even for enhanced SAT techniques such as parity (XOR) reasoning,<br>cardinality detection, and symmetry handling, it has remained beyond<br>reach to design practically efficient proofs in the standard DRAT<br>format. In this work, we show how to instead use pseudo-Boolean<br>inequalities with extension variables to concisely justify XOR<br>reasoning. Our experimental evaluation of a SAT solver integration<br>shows a dramatic decrease in proof logging and verification time<br>compared to existing DRAT methods. Since our method is a strict<br>generalization of DRAT, and readily lends itself to expressing also<br>0-1 programming and even constraint programming problems, we hope this<br>work points the way towards a unified approach for efficient<br>machine-verifiable proofs for a rich class of combinatorial<br>optimization paradigms.</td>
 </tr>
 <tr id="bib_GN21CertifyingParity" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -456,22 +506,29 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{GN21CertifyingParity,
   author = {Stephan Gocht and Jakob Nordström},
   title = {Certifying Parity Reasoning Efficiently Using Pseudo-Boolean Proofs},
-  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)},
   year = {2021},
   volume = {35},
   number = {5},
-  pages = {3768--3777},
-  url = {paper/parity.pdf}
+  pages = {3768--3777}
 }
 </pre></td>
-</tr>
-<tr id="Elffers2020" class="entry">
-	<td>Elffers J, Gocht S, McCreesh C and Nordstr&ouml;m J (2020), <i>"Justifying All Differences Using Pseudo-Boolean Reasoning"</i>, In Proceedings of the AAAI Conference on Artificial Intelligence.  Vol. 34(02), pp. 1486-1494. AAAI Press.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Elffers2020','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Elffers2020','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1609/aaai.v34i02.5507" target="_blank">DOI</a>] [<a href="paper/all_diff.pdf" target="_blank">PDF</a>]</p>
-	</td>
+</tr><tr id="Elffers2020" class="entry">
+    <td>Elffers, J., Gocht, S., McCreesh, C. and Nordstr&ouml;m, J. 2020.
+    Justifying All Differences Using Pseudo-Boolean Reasoning.
+    <i>In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)</i>, Vol. 34, No. 02, pp. 1486-1494. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('Elffers2020','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('Elffers2020','bibtex')">BibTeX</a>]
+     [<a href="https://doi.org/10.1609/aaai.v34i02.5507" target="_blank">DOI</a>]
+    
+     [<a href="paper/all_diff.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_Elffers2020" class="abstract noshow">
-	<td><b>Abstract</b>: Constraint programming solvers support rich global constraints and propagators, which make them both powerful and<br>hard to debug. In the Boolean satisfiability community, prooflogging is the standard solution for generating trustworthy<br>outputs, and this has become key to the social acceptability<br>of computer-generated proofs. However, reusing this technology for constraint programming requires either much weaker<br>propagation, or an impractical blowup in proof length. This<br>paper demonstrates that simple, clean, and efficient proof logging is still possible for the all-different constraint, through<br>pseudo-Boolean reasoning. We explain how such proofs can<br>be expressed and verified mechanistically, describe an implementation, and discuss the broader implications for proof logging in constraint programming.</td>
+    <td><b>Abstract</b>: Constraint programming solvers support rich global constraints and propagators, which make them both powerful and<br>hard to debug. In the Boolean satisfiability community, prooflogging is the standard solution for generating trustworthy<br>outputs, and this has become key to the social acceptability<br>of computer-generated proofs. However, reusing this technology for constraint programming requires either much weaker<br>propagation, or an impractical blowup in proof length. This<br>paper demonstrates that simple, clean, and efficient proof logging is still possible for the all-different constraint, through<br>pseudo-Boolean reasoning. We explain how such proofs can<br>be expressed and verified mechanistically, describe an implementation, and discuss the broader implications for proof logging in constraint programming.</td>
 </tr>
 <tr id="bib_Elffers2020" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -479,24 +536,31 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Elffers2020,
   author = {Jan Elffers and Stephan Gocht and Ciaran McCreesh and Jakob Nordstr&ouml;m},
   title = {Justifying All Differences Using Pseudo-Boolean Reasoning},
-  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)},
   publisher = {AAAI Press},
   year = {2020},
   volume = {34},
   number = {02},
   pages = {1486--1494},
-  url = {paper/all_diff.pdf},
   doi = {10.1609/aaai.v34i02.5507}
 }
 </pre></td>
-</tr>
-<tr id="Gocht2020a" class="entry">
-	<td>Gocht S, McBride R, McCreesh C, Nordstr&ouml;m J, Prosser P and Trimble J (2020), <i>"Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems"</i>, In Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020.  Vol. 12333, pp. 338-357. Springer.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2020a','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2020a','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.1007/978-3-030-58475-7_20" target="_blank">DOI</a>] [<a href="paper/clique.pdf" target="_blank">PDF</a>]</p>
-	</td>
+</tr><tr id="Gocht2020a" class="entry">
+    <td>Gocht, S., McBride, R., McCreesh, C., Nordstr&ouml;m, J., Prosser, P. and Trimble, J. 2020.
+    Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems.
+    <i>In Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming (CP '20)</i>, Vol. 12333 of Lecture Notes in Computer Science, pp. 338-357. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('Gocht2020a','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('Gocht2020a','bibtex')">BibTeX</a>]
+     [<a href="https://doi.org/10.1007/978-3-030-58475-7_20" target="_blank">DOI</a>]
+    
+     [<a href="paper/clique.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_Gocht2020a" class="abstract noshow">
-	<td><b>Abstract</b>: An algorithm is said to be certifying if it outputs, together with a solution to the problem it solves, a proof that this solution is correct. We explain how state of the art maximum clique, maximum weighted clique, maximal clique enumeration and maximum common (connected) induced subgraph algorithms can be turned into certifying solvers by using pseudo-Boolean models and cutting planes proofs, and demonstrate that this approach can also handle reductions between problems. The generality of our results suggests that this method is ready for widespread adoption in solvers for combinatorial graph problems.</td>
+    <td><b>Abstract</b>: An algorithm is said to be certifying if it outputs, together with a solution to the problem it solves, a proof that this solution is correct. We explain how state of the art maximum clique, maximum weighted clique, maximal clique enumeration and maximum common (connected) induced subgraph algorithms can be turned into certifying solvers by using pseudo-Boolean models and cutting planes proofs, and demonstrate that this approach can also handle reductions between problems. The generality of our results suggests that this method is ready for widespread adoption in solvers for combinatorial graph problems.</td>
 </tr>
 <tr id="bib_Gocht2020a" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -505,23 +569,31 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
   author = {Stephan Gocht and Ross McBride and Ciaran McCreesh and Jakob Nordstr&ouml;m and Patrick Prosser and James Trimble},
   editor = {Helmut Simonis},
   title = {Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems},
-  booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming, CP 2020},
+  booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming (CP '20)},
+  series = {Lecture Notes in Computer Science},
   publisher = {Springer},
   year = {2020},
   volume = {12333},
   pages = {338--357},
-  url = {paper/clique.pdf},
   doi = {10.1007/978-3-030-58475-7_20}
 }
 </pre></td>
-</tr>
-<tr id="Gocht2020" class="entry">
-	<td>Gocht S, McCreesh C and Nordström J (2020), <i>"Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions"</i>, In Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20. , pp. 1134-1140.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2020','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2020','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.24963/ijcai.2020/158" target="_blank">DOI</a>] [<a href="paper/sub_graph.pdf" target="_blank">PDF</a>]</p>
-	</td>
+</tr><tr id="Gocht2020" class="entry">
+    <td>Gocht, S., McCreesh, C. and Nordström, J. 2020.
+    Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions.
+    <i>In Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, (IJCAI '20)</i>, pp. 1134-1140. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('Gocht2020','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('Gocht2020','bibtex')">BibTeX</a>]
+     [<a href="https://doi.org/10.24963/ijcai.2020/158" target="_blank">DOI</a>]
+    
+     [<a href="paper/sub_graph.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_Gocht2020" class="abstract noshow">
-	<td><b>Abstract</b>: Modern subgraph isomorphism solvers carry out<br>sophisticated reasoning using graph invariants such<br>as degree sequences and path counts. We show that<br>all of this reasoning can be justified compactly using the cutting planes proofs studied in complexity theory. This allows us to extend a state of the<br>art subgraph isomorphism enumeration solver with<br>proof logging support, so that the solutions it outputs may be audited and verified for correctness and<br>completeness by a simple third party tool which<br>knows nothing about graph theory</td>
+    <td><b>Abstract</b>: Modern subgraph isomorphism solvers carry out<br>sophisticated reasoning using graph invariants such<br>as degree sequences and path counts. We show that<br>all of this reasoning can be justified compactly using the cutting planes proofs studied in complexity theory. This allows us to extend a state of the<br>art subgraph isomorphism enumeration solver with<br>proof logging support, so that the solutions it outputs may be audited and verified for correctness and<br>completeness by a simple third party tool which<br>knows nothing about graph theory</td>
 </tr>
 <tr id="bib_Gocht2020" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -529,21 +601,28 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Gocht2020,
   author = {Gocht, Stephan and McCreesh, Ciaran and Nordström, Jakob},
   title = {Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions},
-  booktitle = {Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, IJCAI-20},
+  booktitle = {Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, (IJCAI '20)},
   year = {2020},
   pages = {1134--1140},
-  url = {paper/sub_graph.pdf},
   doi = {10.24963/ijcai.2020/158}
 }
 </pre></td>
-</tr>
-<tr id="Gocht2019" class="entry">
-	<td>Gocht S, Nordström J and Yehudayoff A (2019), <i>"On Division Versus Saturation in Pseudo-Boolean Solving"</i>, In Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19. , pp. 1711-1718.
-	<p class="infolinks">[<a href="javascript:toggleInfo('Gocht2019','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('Gocht2019','bibtex')">BibTeX</a>] [<a href="https://doi.org/10.24963/ijcai.2019/237" target="_blank">DOI</a>] [<a href="paper/on_division.pdf" target="_blank">PDF</a>]</p>
-	</td>
+</tr><tr id="Gocht2019" class="entry">
+    <td>Gocht, S., Nordström, J. and Yehudayoff, A. 2019.
+    On Division Versus Saturation in Pseudo-Boolean Solving.
+    <i>In Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, (IJCAI '19)</i>, pp. 1711-1718. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('Gocht2019','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('Gocht2019','bibtex')">BibTeX</a>]
+     [<a href="https://doi.org/10.24963/ijcai.2019/237" target="_blank">DOI</a>]
+    
+     [<a href="paper/on_division.pdf" target="_blank">PDF</a>]</p>
+    </td>
 </tr>
 <tr id="abs_Gocht2019" class="abstract noshow">
-	<td><b>Abstract</b>: The conflict-driven clause learning (CDCL) paradigm has revolutionized SAT solving over the last two decades. Extending this approach to pseudo-Boolean (PB) solvers doing 0-1 linear programming holds the promise of further exponential improvements in theory, but intriguingly such gains have not materialized in practice. Also intriguingly, most PB extensions of CDCL use not the division rule in cutting planes as defined in [Cook et al., '87] but instead the so-called saturation rule. To the best of our knowledge, there has been no study comparing the strengths of division and saturation in the context of conflict-driven PB learning, when all linear combinations of inequalities are required to cancel variables. We show that PB solvers with division instead of saturation can be exponentially stronger. In the other direction, we prove that simulating a single saturation step can require an exponential number of divisions. We also perform some experiments to see whether these phenomena can be observed in actual solvers. Our conclusion is that a careful combination of division and saturation seems to be crucial to harness more of the power of cutting planes.s</td>
+    <td><b>Abstract</b>: The conflict-driven clause learning (CDCL) paradigm has revolutionized SAT solving over the last two decades. Extending this approach to pseudo-Boolean (PB) solvers doing 0-1 linear programming holds the promise of further exponential improvements in theory, but intriguingly such gains have not materialized in practice. Also intriguingly, most PB extensions of CDCL use not the division rule in cutting planes as defined in [Cook et al., '87] but instead the so-called saturation rule. To the best of our knowledge, there has been no study comparing the strengths of division and saturation in the context of conflict-driven PB learning, when all linear combinations of inequalities are required to cancel variables. We show that PB solvers with division instead of saturation can be exponentially stronger. In the other direction, we prove that simulating a single saturation step can require an exponential number of divisions. We also perform some experiments to see whether these phenomena can be observed in actual solvers. Our conclusion is that a careful combination of division and saturation seems to be crucial to harness more of the power of cutting planes.s</td>
 </tr>
 <tr id="bib_Gocht2019" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -551,16 +630,15 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Gocht2019,
   author = {Gocht, Stephan and Nordström, Jakob and Yehudayoff, Amir},
   title = {On Division Versus Saturation in Pseudo-Boolean Solving},
-  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, IJCAI-19},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, (IJCAI '19)},
   year = {2019},
   pages = {1711--1718},
-  url = {paper/on_division.pdf},
   doi = {10.24963/ijcai.2019/237}
 }
 </pre></td>
-</tr>
-</tbody>
+</tr></tbody>
 </table>
 <footer>
- <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 01/03/2022.</small>
+ <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 02/03/2022.</small>
 </footer>
+<!-- file generated by JabRef -->
