@@ -399,19 +399,19 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <tr id="BGMN2022Dominance" class="entry">
     <td>Bogaerts, B., Gocht, S., McCreesh, C. and Nordström, J. 2022.
     Certified Symmetry and Dominance Breaking for Combinatorial Optimisation.
-    In <i>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)</i>, Vol. 36. To appear. Distinguished paper award.
+    In <i>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)</i>, Vol. 36, No. 4. <b>Distinguished paper award.</b>
 
     <p class="infolinks">
     [<a href="javascript:toggleInfo('BGMN2022Dominance','abstract')">Abstract</a>]
     
     [<a href="javascript:toggleInfo('BGMN2022Dominance','bibtex')">BibTeX</a>]
     
-    
+     [<a href="https://ojs.aaai.org/index.php/AAAI/article/view/20283" target="_blank">URL</a>]
      [<a href="paper/draft_dominance.pdf" target="_blank">PDF</a>]</p>
     </td>
 </tr>
 <tr id="abs_BGMN2022Dominance" class="abstract noshow">
-    <td><b>Abstract</b>: Symmetry and dominance breaking can be crucial for solving <br>hard combinatorial search and optimisation problems, but<br>the correctness of these techniques sometimes relies on subtle<br>arguments. For this reason, it is desirable to produce efficient,<br>machine-verifiable certificates that solutions have been<br>computed correctly. Building on the cutting planes proof system,<br>we develop a certification method for optimisation problems in<br>which symmetry and dominance breaking are easily<br>expressible. Our experimental evaluation demonstrates that<br>we can efficiently verify fully general symmetry breaking in<br>Boolean satisfiability (SAT) solving, thus providing, for the<br>first time, a unified method to certify a range of advanced SAT<br>techniques that also includes XOR and cardinality reasoning.<br>In addition, we apply our method to maximum clique solving<br>and constraint programming as a proof of concept that the<br>approach applies to a wider range of combinatorial problems.</td>
+    <td><b>Abstract</b>: Symmetry and dominance breaking can be crucial for solving<br>hard combinatorial search and optimisation problems, but<br>the correctness of these techniques sometimes relies on subtle<br>arguments. For this reason, it is desirable to produce efficient,<br>machine-verifiable certificates that solutions have been<br>computed correctly. Building on the cutting planes proof system,<br>we develop a certification method for optimisation problems in<br>which symmetry and dominance breaking are easily<br>expressible. Our experimental evaluation demonstrates that<br>we can efficiently verify fully general symmetry breaking in<br>Boolean satisfiability (SAT) solving, thus providing, for the<br>first time, a unified method to certify a range of advanced SAT<br>techniques that also includes XOR and cardinality reasoning.<br>In addition, we apply our method to maximum clique solving<br>and constraint programming as a proof of concept that the<br>approach applies to a wider range of combinatorial problems.</td>
 </tr>
 <tr id="bib_BGMN2022Dominance" class="bibtex noshow">
 <td><b>BibTeX</b>:
@@ -421,39 +421,95 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
   title = {Certified Symmetry and Dominance Breaking for Combinatorial Optimisation},
   booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '22)},
   year = {2022},
-  volume = {36}
+  volume = {36},
+  number = {4},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/20283}
 }
 </pre></td>
-</tr><tr id="GNMO2022Translations" class="entry">
-	<td>Gocht, S., Nordström, J., Martins, R. and Oertel, A. 2022.
+</tr><tr id="" class="entry">
+	<td>Gocht S (2022), <i>"Certifying Correctness for Combinatorial Algorithms by Using Pseudo-Boolean Reasoning"</i>. Thesis at: Department of Computer Science, Lund University. 
+	<p class="infolinks">[<a href="javascript:toggleInfo('','abstract')">Abstract</a>] [<a href="javascript:toggleInfo('','bibtex')">BibTeX</a>] [<a href="https://portal.research.lu.se/en/publications/certifying-correctness-for-combinatorial-algorithms-by-using-pseu" target="_blank">URL</a>]</p>
+	</td>
+</tr>
+<tr id="abs_" class="abstract noshow">
+	<td><b>Abstract</b>: Over the last decades, dramatic improvements in combinatorialoptimisation algorithms have significantly impacted artificialintelligence, operations research, and other areas. These advances,however, are achieved through highly sophisticated algorithms that aredifficult to verify and prone to implementation errors that can causeincorrect results. A promising approach to detect wrong results is touse certifying algorithms that produce not only the desired output butalso a certificate or proof of correctness of the output. An externaltool can then verify the proof to determine that the given answer isvalid. In the Boolean satisfiability (SAT) community, this concept iswell established in the form of proof logging, which has become thestandard solution for generating trustworthy outputs. The problem isthat there are still some SAT solving techniques for which prooflogging is challenging and not yet used in practice. Additionally,there are many formalisms more expressive than SAT, such as constraintprogramming, various graph problems and maximum satisfiability(MaxSAT), for which efficient proof logging is out of reach forstate-of-the-art techniques.This work develops a new proof system building on the cutting planesproof system and operating on pseudo-Boolean constraints (0-1 linearinequalities). We explain how such machine-verifiable proofs can becreated for various problems, including parity reasoning, symmetry anddominance breaking, constraint programming, subgraph isomorphism andmaximum common subgraph problems, and pseudo-Boolean problems. Weimplement and evaluate the resulting algorithms and a verifier for theproof format, demonstrating that the approach is practical for a widerange of problems. We are optimistic that the proposed proof system issuitable for designing certifying variants of algorithms inpseudo-Boolean optimisation, MaxSAT and beyond.</td>
+</tr>
+<tr id="bib_" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@thesis{,
+  author = {Stephan Gocht},
+  title = {Certifying Correctness for Combinatorial Algorithms by Using Pseudo-Boolean Reasoning},
+  school = {Department of Computer Science, Lund University},
+  year = {2022},
+  url = {https://portal.research.lu.se/en/publications/certifying-correctness-for-combinatorial-algorithms-by-using-pseu}
+}
+</pre></td>
+</tr>
+<tr id="GNMO2022Translations" class="entry">
+    <td>Gocht, S., Martins, R., Nordström, J. and Oertel, A. 2022.
     Certified CNF Translations for Pseudo-Boolean Solving.
-    Submitted manuscript.
+    In <i>Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '22)</i>, Vol. 236 of Leibniz International Proceedings in Informatics (LIPIcs), pp. 16:1-16:25. <b>Best paper award.</b>
 
     <p class="infolinks">
     [<a href="javascript:toggleInfo('GNMO2022Translations','abstract')">Abstract</a>]
     
     [<a href="javascript:toggleInfo('GNMO2022Translations','bibtex')">BibTeX</a>]
     
-    
+     [<a href="https://drops.dagstuhl.de/opus/volltexte/2022/16690/" target="_blank">URL</a>]
      [<a href="paper/draft_translations.pdf" target="_blank">PDF</a>]</p>
-	</td>
+    </td>
 </tr>
 <tr id="abs_GNMO2022Translations" class="abstract noshow">
-	<td><b>Abstract</b>: The dramatic improvements in Boolean satisfiability (SAT) solving since the turn of the millennium have made it possible to leverage state-of-the-art conflict-driven clause learning (CDCL) solvers for many combinatorial problems in academia and industry, and the use of proof logging has played a crucial role in increasing the confidence that the results these solvers produce are correct. However, the conjunctive normal form (CNF) format used for SAT proof logging means that it is hard to extend the method to other, stronger, solving paradigms for combinatorial problems. We show how to instead leverage the cutting planes proof system to provide proof logging for pseudo-Boolean solvers that translate pseudo-Boolean problems (a.k.a 0-1 integer linear programs) to CNF and run CDCL. We are hopeful that this is just a first step towards providing a unified proof logging approach that will also extend to maximum satisfiability (MaxSAT) solving and pseudo-Boolean optimization in general.</td>
+    <td><b>Abstract</b>: The dramatic improvements in Boolean satisfiability (SAT) solving since the turn of the millennium have made it possible to leverage state-of-the-art conflict-driven clause learning (CDCL) solvers for many combinatorial problems in academia and industry, and the use of proof logging has played a crucial role in increasing the confidence that the results these solvers produce are correct. However, the conjunctive normal form (CNF) format used for SAT proof logging means that it is hard to extend the method to other, stronger, solving paradigms for combinatorial problems. We show how to instead leverage the cutting planes proof system to provide proof logging for pseudo-Boolean solvers that translate pseudo-Boolean problems (a.k.a 0-1 integer linear programs) to CNF and run CDCL. We are hopeful that this is just a first step towards providing a unified proof logging approach that will also extend to maximum satisfiability (MaxSAT) solving and pseudo-Boolean optimization in general.</td>
 </tr>
 <tr id="bib_GNMO2022Translations" class="bibtex noshow">
 <td><b>BibTeX</b>:
 <pre>
-@unpublished{GNMO2022Translations,
-  author = {Stephan Gocht and Jakob Nordström and Ruben Martins and Andy Oertel},
+@inproceedings{GNMO2022Translations,
+  author = {Stephan Gocht and Ruben Martins and Jakob Nordström and Andy Oertel},
   title = {Certified CNF Translations for Pseudo-Boolean Solving},
-  booktitle = {Under review},
-  year = {2022}
+  booktitle = {Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '22)},
+  series = {Leibniz International Proceedings in Informatics (LIPIcs)},
+  year = {2022},
+  volume = {236},
+  pages = {16:1--16:25},
+  url = {https://drops.dagstuhl.de/opus/volltexte/2022/16690/}
 }
 </pre></td>
+</tr><tr id="GMN2022Auditable" class="entry">
+    <td>Gocht, S., McCreesh, C. and Nordstr&ouml;m, J. 2022.
+    An Auditable Constraint Programming Solver.
+    In <i>Proceedings of the 28th International Conference on Principles and Practice of Constraint Programming (CP '22)</i>, Vol. 235 of Leibniz International Proceedings in Informatics (LIPIcs), pp. 25:1-25:18. 
+
+    <p class="infolinks">
+    [<a href="javascript:toggleInfo('GMN2022Auditable','abstract')">Abstract</a>]
+    
+    [<a href="javascript:toggleInfo('GMN2022Auditable','bibtex')">BibTeX</a>]
+    
+     [<a href="https://drops.dagstuhl.de/opus/volltexte/2022/16654/" target="_blank">URL</a>]
+    </p>
+    </td>
 </tr>
-<tr id="DGDNS21Cutting" class="entry">
-    <td>Devriendt, J., Gocht, S., Demirovi&cacute;, Emir, Nordström, J. and Stuckey, P. 2021.
+<tr id="abs_GMN2022Auditable" class="abstract noshow">
+    <td><b>Abstract</b>: We describe the design and implementation of a new constraint programming solver that can produce<br>an auditable record of what problem was solved and how the solution was reached. As well as a<br>solution, this solver provides an independently verifiable proof log demonstrating that the solution is<br>correct. This proof log uses the VeriPB proof system, which is based upon cutting planes reasoning<br>with extension variables. We explain how this system can support proof logging when using global<br>constraints, variables with large domains, and reformulation, despite not natively understanding any<br>of these concepts.</td>
+</tr>
+<tr id="bib_GMN2022Auditable" class="bibtex noshow">
+<td><b>BibTeX</b>:
+<pre>
+@inproceedings{GMN2022Auditable,
+  author = {Stephan Gocht and Ciaran McCreesh and Jakob Nordstr&ouml;m},
+  title = {An Auditable Constraint Programming Solver},
+  booktitle = {Proceedings of the 28th International Conference on Principles and Practice of Constraint Programming (CP '22)},
+  series = {Leibniz International Proceedings in Informatics (LIPIcs)},
+  year = {2022},
+  volume = {235},
+  pages = {25:1--25:18},
+  url = {https://drops.dagstuhl.de/opus/volltexte/2022/16654/}
+}
+</pre></td>
+</tr><tr id="DGDNS21Cutting" class="entry">
+    <td>Devriendt, J., Gocht, S., Demirovi&cacute;, E., Nordström, J. and Stuckey, P. 2021.
     Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning.
     In <i>Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)</i>, Vol. 35, No. 5, pp. 3768-3777. 
 
@@ -473,7 +529,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <td><b>BibTeX</b>:
 <pre>
 @inproceedings{DGDNS21Cutting,
-  author = {Jo Devriendt and Stephan Gocht and Demirovi&cacute; and Emir and Jakob Nordström and Peter Stuckey},
+  author = {Jo Devriendt and Stephan Gocht and Emir Demirovi&cacute; and Jakob Nordström and Peter Stuckey},
   title = {Cutting to the Core of Pseudo-Boolean Optimization: Combining Core-Guided Search with Cutting Planes Reasoning},
   booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI '21)},
   year = {2021},
@@ -511,35 +567,6 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
   volume = {35},
   number = {5},
   pages = {3768--3777}
-}
-</pre></td>
-</tr><tr id="Gocht2021" class="entry">
-    <td>Gocht, S., Nordström, J. and Martins, R. 2021.
-    Certifying CNF Encodings of Pseudo-Boolean Constraints (abstract).
-    In <i>Proceedings Seventh Workshop onProof eXchange for Theorem Proving</i>, pp. 48. 
-
-    <p class="infolinks">
-    [<a href="javascript:toggleInfo('Gocht2021','abstract')">Abstract</a>]
-    
-    [<a href="javascript:toggleInfo('Gocht2021','bibtex')">BibTeX</a>]
-    
-     [<a href="http://eptcs.web.cse.unsw.edu.au/content.cgi?PxTP2021#EPTCS336.5" target="_blank">URL</a>]
-    </p>
-    </td>
-</tr>
-<tr id="abs_Gocht2021" class="abstract noshow">
-    <td><b>Abstract</b>: The dramatic improvements in Boolean satisfiability (SAT) solving since the turn of the millennium have made it possible to leverage state-of-the-art conflict-driven clause learning (CDCL) solvers for many combinatorial problems in academia and industry, and the use of proof logging has played a crucial role in increasing the confidence that the results these solvers produce are correct. However, the conjunctive normal form (CNF) format used for SAT proof logging means that it is hard to extend the method to other, stronger, solving paradigms for combinatorial problems. We show how to instead leverage the cutting planes proof system to provide proof logging for pseudo-Boolean solvers that translate pseudo-Boolean problems (a.k.a 0-1 integer linear programs) to CNF and run CDCL. We are hopeful that this is just a first step towards providing a unified proof logging approach that will also extend to maximum satisfiability (MaxSAT) solving and pseudo-Boolean optimization in general.</td>
-</tr>
-<tr id="bib_Gocht2021" class="bibtex noshow">
-<td><b>BibTeX</b>:
-<pre>
-@inproceedings{Gocht2021,
-  author = {Stephan Gocht and Jakob Nordström and Ruben Martins},
-  title = {Certifying CNF Encodings of Pseudo-Boolean Constraints (abstract)},
-  booktitle = {Proceedings Seventh Workshop onProof eXchange for Theorem Proving},
-  year = {2021},
-  pages = {48},
-  url = {http://eptcs.web.cse.unsw.edu.au/content.cgi?PxTP2021#EPTCS336.5}
 }
 </pre></td>
 </tr><tr id="Elffers2020" class="entry">
@@ -596,7 +623,6 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 <pre>
 @inproceedings{Gocht2020a,
   author = {Stephan Gocht and Ross McBride and Ciaran McCreesh and Jakob Nordstr&ouml;m and Patrick Prosser and James Trimble},
-  editor = {Helmut Simonis},
   title = {Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems},
   booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming (CP '20)},
   series = {Lecture Notes in Computer Science},
@@ -639,7 +665,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </tr><tr id="SGM2020Tinted" class="entry">
     <td>Soos, M., Gocht, S. and Meel, K. S. 2020.
     Tinted, Detached, and Lazy CNF-XOR Solving and Its Applications to Counting and Sampling.
-    In <i>Computer Aided Verification, CAV 2020</i>, Vol. 12224 of Lecture Notes in Computer Science, pp. 463-484. 
+    In <i>Proceedings of the International Conference on Computer Aided Verification (CAV '20)</i>, Vol. 12224 of Lecture Notes in Computer Science, pp. 463-484. 
 
     <p class="infolinks">
     [<a href="javascript:toggleInfo('SGM2020Tinted','abstract')">Abstract</a>]
@@ -659,7 +685,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{SGM2020Tinted,
   author = {Mate Soos and Stephan Gocht and Kuldeep S. Meel},
   title = {Tinted, Detached, and Lazy CNF-XOR Solving and Its Applications to Counting and Sampling},
-  booktitle = {Computer Aided Verification, CAV 2020},
+  booktitle = {Proceedings of the International Conference on Computer Aided Verification (CAV '20)},
   series = {Lecture Notes in Computer Science},
   publisher = {Springer},
   year = {2020},
@@ -760,7 +786,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </tr><tr id="Vinyals2018" class="entry">
     <td>Vinyals, M., Elffers, J., Gir&aacute;ldez-Cru, J., Gocht, S. and Nordstr&ouml;m, J. 2018.
     In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving.
-    In <i>International Conference on Theory and Applications of Satisfiability Testing</i>, pp. 292-310. 
+    In <i>Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '18)</i>, pp. 292-310. 
 
     <p class="infolinks">
     [<a href="javascript:toggleInfo('Vinyals2018','abstract')">Abstract</a>]
@@ -780,7 +806,7 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 @inproceedings{Vinyals2018,
   author = {Vinyals, Marc and Elffers, Jan and Gir&aacute;ldez-Cru, Jes&uacute;s and Gocht, Stephan and Nordstr&ouml;m, Jakob},
   title = {In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving},
-  booktitle = {International Conference on Theory and Applications of Satisfiability Testing},
+  booktitle = {Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '18)},
   year = {2018},
   pages = {292--310},
   url = {https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18}
@@ -887,6 +913,6 @@ p.infolinks { margin: 0.3em 0em 0em 0em; padding: 0px; }
 </tbody>
 </table>
 <footer>
- <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 14/03/2022.</small>
+ <small>Created by <a href="http://jabref.sourceforge.net">JabRef</a> on 23/12/2022.</small>
 </footer>
 <!-- file generated by JabRef -->

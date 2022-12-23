@@ -1,0 +1,382 @@
+@InProceedings{gocht2017accelerating,
+  author    = {Gocht, Stephan and Balyo, Tom{\'a}{\v{s}}},
+  booktitle = {Proceedings of the Twenty-Seventh International Conference on Automated Planning and Scheduling (ICAPS 2017)},
+  title     = {Accelerating SAT Based Planning with Incremental SAT Solving},
+  year      = {2017},
+  pages     = {135--139},
+  abstract  = {One of the most successful approaches to automated plan-
+ning is the translation to propositional satisfiability (SAT).
+We employ incremental SAT solving to increase the capabili-
+ties of several modern encodings for SAT based planning. Ex-
+periments based on benchmarks from the 2014 International
+Planning Competition show that an incremental approach sig-
+nificantly outperforms non incremental solving. Although we
+are using sequential scheduling of makespans, we can outper-
+form the state-of-the-art SAT based planning system Mada-
+gascar in the number of solved instances.},
+  groups    = {undergrad},
+  url       = {https://www.aaai.org/ocs/index.php/ICAPS/ICAPS17/paper/view/15580},
+}
+
+@Thesis{gocht2017incremental,
+  abstract = {One of the most successful approaches to automated planning is the translation to proposi-
+tional satisfiability (SAT). This thesis evaluates incremental SAT solving for several modern
+encodings for SAT based planning.
+Experiments based on benchmarks from the 2014 International Planning Competition
+show that an incremental approach significantly outperforms non-incremental solving.
+Although, planning specific heuristics and advanced scheduling of makespans is not used,
+it is possible to outperform the state-of-the-art SAT based planning systems Madagascar
+and PDRPlan in the number of solved instances.},
+  author   = {Gocht, Stephan},
+  groups   = {undergrad},
+  school   = {Karlsruhe Institute of Technology (KIT)},
+  title    = {Incremental SAT Solving for SAT Based Planning},
+  url      = {https://algo2.iti.kit.edu/3324.php},
+  year     = {2017},
+}
+
+@Thesis{gocht2014refinement,
+  abstract = {Path conditions are a static analysis tool for information flow control (IFC). They can be
+used to produce witnesses for an illegal flow, which do not necessarily represent a concrete
+execution of the program. This bachelor thesis will provide a detailed approach to eliminate
+these false witnesses using counterexample guided abstraction refinement (CEGAR) and
+thereby increase precision.
+As not all values satisfying the PC need to occur simultaneously during a program execution,
+a property is introduced which is true iff the values occur during the program execution.
+Some values are always occurring simultaneously if a flow exists. This information can be
+used to increase precision and is added to the described property, without using temporal
+logic. Finally, the CEGAR approach is adopted to provide an algorithm for checking this
+property.},
+  author   = {Gocht, Stephan},
+  groups   = {undergrad},
+  school   = {Karlsruhe Institute of Technology (KIT)},
+  title    = {Refinement of Path Conditions for Information Flow Analysis},
+  url      = {https://asa.iti.kit.edu/130_441.php},
+  year     = {2014},
+}
+
+@InProceedings{Beckert2017,
+  author    = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattiasg},
+  booktitle = {Integrated Formal Methods},
+  title     = {SemSlice: Exploiting Relational Verification for Automatic Program Slicing},
+  year      = {2017},
+  pages     = {312--319},
+  abstract  = {We present SemSlice, a tool which automatically produces very precise slices for C routines. Slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are close to the minimal number of statements, the program's semantics must be considered. SemSlice is based on automatic relational regression verification, which SemSlice uses to select valid slices from a set of candidate slices. We present several approaches for producing candidates for precise slices. Evaluation shows that regression verification (based on coupling invariant inference) is a powerful tool for semantics-aware slicing: precise slices for typical slicing challenges can be found automatically and fast.},
+  groups    = {undergrad},
+  isbn      = {978-3-319-66845-1},
+  url       = {https://link.springer.com/chapter/10.1007/978-3-319-66845-1_20},
+}
+
+@InProceedings{Vinyals2018,
+  author       = {Vinyals, Marc and Elffers, Jan and Gir{\'a}ldez-Cru, Jes{\'u}s and Gocht, Stephan and Nordstr{\"o}m, Jakob},
+  booktitle    = {Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '18)},
+  title        = {In between resolution and cutting planes: a study of proof systems for pseudo-Boolean SAT solving},
+  year         = {2018},
+  organization = {Springer},
+  pages        = {292--310},
+  abstract     = {We initiate a proof complexity theoretic study of subsystems of
+cutting planes (CP) modelling proof search in conflict-driven pseudo-
+Boolean (PB) solvers. These algorithms combine restrictions such as
+that addition of constraints should always cancel a variable and/or
+that so-called saturation is used instead of division. It is known
+that on CNF inputs cutting planes with cancelling addition and
+saturation is essentially just resolution. We show that even if
+general addition is allowed, this proof system is still polynomially
+simulated by resolution with respect to proof size as long as
+coefficients are polynomially bounded.
+As a further way of delineating the proof power of subsystems of CP,
+we propose to study a number of easy (but tricky) instances of
+problems in NP. Most of the formulas we consider have short and simple
+tree-like proofs in general CP, but the restricted subsystems seem to
+reveal a much more varied landscape. Although we are not able to
+formally establish separations between different subsystems of
+CP---which would require major technical breakthroughs in proof
+complexity---these formulas appear to be good candidates for obtaining
+such separations. We believe that a closer study of these benchmarks
+is a promising approach for shedding more light on the reasoning power
+of pseudo-Boolean solvers.},
+  url          = {https://link.springer.com/chapter/10.1007/978-3-319-94144-8_18},
+}
+
+@InProceedings{Elffers2018,
+  author    = {Elffers, Jan and Gir{\'a}ldez-Cru, Jes{\'u}s and Gocht, Stephan and Nordstr{\"o}m, Jakob and Simon, Laurent},
+  booktitle = {Proceedings of the Twenty-Seventh International Joint Conference on Artificial Intelligence, ({IJCAI} '18)},
+  title     = {Seeking Practical CDCL Insights from Theoretical SAT Benchmarks.},
+  year      = {2018},
+  pages     = {1300--1308},
+  abstract  = {Over the last decades Boolean satisfiability (SAT)
+solvers based on conflict-driven clause learning
+(CDCL) have developed to the point where they can
+handle formulas with millions of variables. Yet a
+deeper understanding of how these solvers can be
+so successful has remained elusive. In this work
+we shed light on CDCL performance by using theoretical
+benchmarks, which have the attractive features
+of being a) scalable, b) extremal with respect
+to different proof search parameters, and c) theoretically
+easy in the sense of having short proofs in the
+resolution proof system underlying CDCL. This allows
+for a systematic study of solver heuristics and
+how efficiently they search for proofs. We report
+results from extensive experiments on a wide range
+of benchmarks. Our findings include several examples
+where theory predicts and explains CDCL behaviour,
+but also raise a number of intriguing questions
+for further study.},
+  url       = {https://www.ijcai.org/proceedings/2018/181},
+}
+
+@InProceedings{Elffers2020,
+  author    = {Jan Elffers and Stephan Gocht and Ciaran McCreesh and Jakob Nordstr{\"{o}}m},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence ({AAAI} '20)},
+  title     = {Justifying All Differences Using Pseudo-Boolean Reasoning},
+  year      = {2020},
+  number    = {02},
+  pages     = {1486--1494},
+  publisher = {{AAAI} Press},
+  volume    = {34},
+  abstract  = {Constraint programming solvers support rich global constraints and propagators, which make them both powerful and
+hard to debug. In the Boolean satisfiability community, prooflogging is the standard solution for generating trustworthy
+outputs, and this has become key to the social acceptability
+of computer-generated proofs. However, reusing this technology for constraint programming requires either much weaker
+propagation, or an impractical blowup in proof length. This
+paper demonstrates that simple, clean, and efficient proof logging is still possible for the all-different constraint, through
+pseudo-Boolean reasoning. We explain how such proofs can
+be expressed and verified mechanistically, describe an implementation, and discuss the broader implications for proof logging in constraint programming.},
+  doi       = {https://doi.org/10.1609/aaai.v34i02.5507},
+  groups    = {inthesis},
+  pdf       = {paper/all_diff.pdf},
+}
+
+@InProceedings{Gocht2019,
+  author    = {Gocht, Stephan and Nordström, Jakob and Yehudayoff, Amir},
+  booktitle = {Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence, ({IJCAI} '19)},
+  title     = {On Division Versus Saturation in Pseudo-Boolean Solving},
+  year      = {2019},
+  pages     = {1711--1718},
+  abstract  = {The conflict-driven clause learning (CDCL) paradigm has revolutionized SAT solving over the last two decades. Extending this approach to pseudo-Boolean (PB) solvers doing 0-1 linear programming holds the promise of further exponential improvements in theory, but intriguingly such gains have not materialized in practice. Also intriguingly, most PB extensions of CDCL use not the division rule in cutting planes as defined in [Cook et al., '87] but instead the so-called saturation rule. To the best of our knowledge, there has been no study comparing the strengths of division and saturation in the context of conflict-driven PB learning, when all linear combinations of inequalities are required to cancel variables. We show that PB solvers with division instead of saturation can be exponentially stronger. In the other direction, we prove that simulating a single saturation step can require an exponential number of divisions. We also perform some experiments to see whether these phenomena can be observed in actual solvers. Our conclusion is that a careful combination of division and saturation seems to be crucial to harness more of the power of cutting planes.s},
+  doi       = {https://doi.org/10.24963/ijcai.2019/237},
+  groups    = {inthesis},
+  pdf       = {paper/on_division.pdf},
+}
+
+@InProceedings{Beckert2019,
+  author    = {Beckert, Bernhard and Bormer, Thorsten and Gocht, Stephan and Herda, Mihai and Lentzsch, Daniel and Ulbrich, Mattias},
+  booktitle = {Software Engineering and Formal Methods. SEFM 2019},
+  title     = {Using Relational Verification for Program Slicing},
+  year      = {2019},
+  pages     = {353--372},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {11724},
+  abstract  = {Program slicing is the process of removing statements from a program such that defined aspects of its behavior are retained. For producing precise slices, i.e., slices that are minimal in size, the program's semantics must be considered. Existing approaches that go beyond a syntactical analysis and do take the semantics into account are not fully automatic and require auxiliary specifications from the user. In this paper, we adapt relational verification to check whether a slice candidate obtained by removing some instructions from a program is indeed a valid slice. Based on this, we propose a framework for precise and automatic program slicing. As part of this framework, we present three strategies for the generation of slice candidates, and we show how dynamic slicing approaches -- that interweave generating and checking slice candidates -- can be used for this purpose. The framework can easily be extended with other strategies for generating slice candidates. We discuss the strengths and weaknesses of slicing approaches that use our framework.},
+  groups    = {undergrad},
+  isbn      = {978-3-030-30446-1},
+  url       = {https://doi.org/10.1007/978-3-030-30446-1_19},
+}
+
+@InProceedings{Gocht2020,
+  author    = {Gocht, Stephan and McCreesh, Ciaran and Nordström, Jakob},
+  booktitle = {Proceedings of the Twenty-Ninth International Joint Conference on Artificial Intelligence, ({IJCAI} '20)},
+  title     = {Subgraph Isomorphism Meets Cutting Planes: Solving With Certified Solutions},
+  year      = {2020},
+  pages     = {1134--1140},
+  abstract  = {Modern subgraph isomorphism solvers carry out
+sophisticated reasoning using graph invariants such
+as degree sequences and path counts. We show that
+all of this reasoning can be justified compactly using the cutting planes proofs studied in complexity theory. This allows us to extend a state of the
+art subgraph isomorphism enumeration solver with
+proof logging support, so that the solutions it outputs may be audited and verified for correctness and
+completeness by a simple third party tool which
+knows nothing about graph theory},
+  doi       = {https://doi.org/10.24963/ijcai.2020/158},
+  groups    = {inthesis},
+  pdf       = {paper/sub_graph.pdf},
+}
+
+@InProceedings{SGM2020Tinted,
+  author    = {Mate Soos and Stephan Gocht and Kuldeep S. Meel},
+  booktitle = {Proceedings of the International Conference on Computer Aided Verification (CAV '20)},
+  title     = {Tinted, Detached, and Lazy {CNF-XOR} Solving and Its Applications to Counting and Sampling},
+  year      = {2020},
+  pages     = {463--484},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12224},
+  abstract  = {Given a Boolean formula, the problem of counting seeks to estimate the
+number of solutions of F while the problem of uniform sampling seeks
+to sample solutions uniformly at random. Counting and uniform sampling
+are fundamental problems in computer science with a wide range of
+applications ranging from constrained random simulation, probabilistic
+inference to network reliability and beyond. The past few years have
+witnessed the rise of hashing-based approaches that use XORbased
+hashing and employ SAT solvers to solve the resulting CNF formulas
+conjuncted with XOR constraints. Since over 99\% of the runtime of
+hashing-based techniques is spent inside the SAT queries, improving
+CNF-XOR solvers has emerged as a key challenge.
+In this paper, we identify the key performance bottlenecks in the
+recently proposed BIRD architecture, and we focus on overcoming these
+bottlenecks by accelerating the XOR handling within the SAT solver and
+on improving the solver integration through a smarter use of (partial)
+solutions. We integrate the resulting system, called BIRD2, with the
+state of the art approximate model counter, ApproxMC3, and the state
+of the art almost-uniform model sampler UniGen2. Through an extensive
+evaluation over a large benchmark set of over 1896 instances, we
+observe that BIRD2 leads to consistent speed up for both counting and
+sampling, and in particular, we solve 77 and 51 more instances for
+counting and sampling respectively.},
+  timestamp = {Wed, 12 Aug 2020 15:15:44 +0200},
+  url       = {https://doi.org/10.1007/978-3-030-53288-8_22},
+}
+
+@InProceedings{Gocht2020a,
+  author    = {Stephan Gocht and Ross McBride and Ciaran McCreesh and Jakob Nordstr{\"{o}}m and Patrick Prosser and James Trimble},
+  booktitle = {Proceedings of the 26th International Conference on Principles and Practice of Constraint Programming ({CP} '20)},
+  title     = {Certifying Solvers for Clique and Maximum Common (Connected) Subgraph Problems},
+  year      = {2020},
+  pages     = {338--357},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12333},
+  abstract  = {An algorithm is said to be certifying if it outputs, together with a solution to the problem it solves, a proof that this solution is correct. We explain how state of the art maximum clique, maximum weighted clique, maximal clique enumeration and maximum common (connected) induced subgraph algorithms can be turned into certifying solvers by using pseudo-Boolean models and cutting planes proofs, and demonstrate that this approach can also handle reductions between problems. The generality of our results suggests that this method is ready for widespread adoption in solvers for combinatorial graph problems.},
+  bibsource = {dblp computer science bibliography, https://dblp.org},
+  biburl    = {https://dblp.org/rec/conf/cp/GochtMMNPT20.bib},
+  doi       = {https://doi.org/10.1007/978-3-030-58475-7_20},
+  groups    = {inthesis},
+  pdf       = {paper/clique.pdf},
+}
+
+@InProceedings{BGMN2022Dominance,
+  author    = {Bart Bogaerts and Stephan Gocht and Ciaran McCreesh and Jakob Nordström},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence ({AAAI} '22)},
+  title     = {{C}ertified {S}ymmetry and {D}ominance {B}reaking for {C}ombinatorial {O}ptimisation},
+  year      = {2022},
+  number    = {4},
+  volume    = {36},
+  abstract  = {Symmetry and dominance breaking can be crucial for solving
+hard combinatorial search and optimisation problems, but
+the correctness of these techniques sometimes relies on subtle
+arguments. For this reason, it is desirable to produce efficient,
+machine-verifiable certificates that solutions have been
+computed correctly. Building on the cutting planes proof system,
+we develop a certification method for optimisation problems in
+which symmetry and dominance breaking are easily
+expressible. Our experimental evaluation demonstrates that
+we can efficiently verify fully general symmetry breaking in
+Boolean satisfiability (SAT) solving, thus providing, for the
+first time, a unified method to certify a range of advanced SAT
+techniques that also includes XOR and cardinality reasoning.
+In addition, we apply our method to maximum clique solving
+and constraint programming as a proof of concept that the
+approach applies to a wider range of combinatorial problems.},
+  comment   = {<b>Distinguished paper award.</b>},
+  groups    = {inthesis},
+  pdf       = {paper/draft_dominance.pdf},
+  url       = {https://ojs.aaai.org/index.php/AAAI/article/view/20283},
+}
+
+@InProceedings{DGDNS21Cutting,
+  author    = {Jo Devriendt and Stephan Gocht and Emir Demirovi{\'{c}} and Jakob Nordström and Peter Stuckey},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence ({AAAI} '21)},
+  title     = {{C}utting to the {C}ore of {P}seudo-{B}oolean {O}ptimization: {C}ombining {C}ore-{G}uided {S}earch with {C}utting {P}lanes {R}easoning},
+  year      = {2021},
+  number    = {5},
+  pages     = {3768--3777},
+  volume    = {35},
+  abstract  = {Core-guided techniques have revolutionized Boolean satisfiability
+approaches to optimization problems (MaxSAT), but the process at the
+heart of these methods, strengthening bounds on solutions by
+repeatedly adding cardinality constraints, remains a bottleneck.
+Cardinality constraints require significant work to be re-encoded to
+SAT, and SAT solvers are notoriously weak at cardinality reasoning.
+In this work, we lift core-guided search to pseudo-Boolean (PB)
+solvers, which deal with more general PB optimization problems and
+operate natively with cardinality constraints. The cutting planes
+method used in such solvers allows us to derive stronger cardinality
+constraints, which yield better updates to solution bounds, and the
+increased efficiency of objective function reformulation also makes
+it feasible to switch repeatedly between lower-bounding and
+upper-bounding search.  A thorough evaluation on applied and crafted
+benchmarks shows that our core-guided PB solver significantly
+improves on the state of the art in pseudo-Boolean optimization.},
+  groups    = {inthesis},
+  pdf       = {paper/core_guided.pdf},
+  url       = {https://ojs.aaai.org/index.php/AAAI/article/view/16494},
+}
+
+@InProceedings{GNMO2022Translations,
+  author    = {Stephan Gocht and Ruben Martins and Jakob Nordström and Andy Oertel},
+  booktitle = {Proceedings of the 25nd International Conference on Theory and Applications of Satisfiability Testing (SAT '22)},
+  title     = {{C}ertified {CNF} {T}ranslations for {P}seudo-{B}oolean {S}olving},
+  year      = {2022},
+  pages     = {16:1--16:25},
+  series    = {Leibniz International Proceedings in Informatics (LIPIcs)},
+  volume    = {236},
+  abstract  = {The dramatic improvements in Boolean satisfiability (SAT) solving since the turn of the millennium have made it possible to leverage state-of-the-art conflict-driven clause learning (CDCL) solvers for many combinatorial problems in academia and industry, and the use of proof logging has played a crucial role in increasing the confidence that the results these solvers produce are correct. However, the conjunctive normal form (CNF) format used for SAT proof logging means that it is hard to extend the method to other, stronger, solving paradigms for combinatorial problems. We show how to instead leverage the cutting planes proof system to provide proof logging for pseudo-Boolean solvers that translate pseudo-Boolean problems (a.k.a 0-1 integer linear programs) to CNF and run CDCL. We are hopeful that this is just a first step towards providing a unified proof logging approach that will also extend to maximum satisfiability (MaxSAT) solving and pseudo-Boolean optimization in general.},
+  comment   = {<b>Best paper award.</b>},
+  groups    = {inthesis},
+  pdf       = {paper/draft_translations.pdf},
+  url       = {https://drops.dagstuhl.de/opus/volltexte/2022/16690/},
+}
+
+@InProceedings{GN21CertifyingParity,
+  author    = {Stephan Gocht and Jakob Nordström},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence ({AAAI} '21)},
+  title     = {{C}ertifying {P}arity {R}easoning {E}fficiently {U}sing {P}seudo-{B}oolean {P}roofs},
+  year      = {2021},
+  number    = {5},
+  pages     = {3768--3777},
+  volume    = {35},
+  abstract  = {The dramatic improvements in combinatorial optimization algorithms
+over the last decades have had a major impact in artificial
+intelligence, operations research, and beyond, but the output of
+current state-of-the-art solvers is often hard to verify and is
+sometimes wrong. For Boolean satisfiability (SAT) solvers proof
+logging has been introduced as a way to certify correctness, but the
+methods used seem hard to generalize to stronger paradigms. What is
+more, even for enhanced SAT techniques such as parity (XOR) reasoning,
+cardinality detection, and symmetry handling, it has remained beyond
+reach to design practically efficient proofs in the standard DRAT
+format. In this work, we show how to instead use pseudo-Boolean
+inequalities with extension variables to concisely justify XOR
+reasoning. Our experimental evaluation of a SAT solver integration
+shows a dramatic decrease in proof logging and verification time
+compared to existing DRAT methods. Since our method is a strict
+generalization of DRAT, and readily lends itself to expressing also
+0-1 programming and even constraint programming problems, we hope this
+work points the way towards a unified approach for efficient
+machine-verifiable proofs for a rich class of combinatorial
+optimization paradigms.},
+  groups    = {inthesis},
+  pdf       = {paper/parity.pdf},
+}
+
+@InProceedings{GMN2022Auditable,
+  author    = {Stephan Gocht and Ciaran McCreesh and Jakob Nordstr{\"{o}}m},
+  booktitle = {Proceedings of the 28th International Conference on Principles and Practice of Constraint Programming (CP '22)},
+  title     = {{A}n {A}uditable {C}onstraint {P}rogramming {S}olver},
+  year      = {2022},
+  pages     = {25:1--25:18},
+  series    = {Leibniz International Proceedings in Informatics (LIPIcs)},
+  volume    = {235},
+  abstract  = {We describe the design and implementation of a new constraint programming solver that can produce
+an auditable record of what problem was solved and how the solution was reached. As well as a
+solution, this solver provides an independently verifiable proof log demonstrating that the solution is
+correct. This proof log uses the VeriPB proof system, which is based upon cutting planes reasoning
+with extension variables. We explain how this system can support proof logging when using global
+constraints, variables with large domains, and reformulation, despite not natively understanding any
+of these concepts.},
+  groups    = {thesis},
+  url       = {https://drops.dagstuhl.de/opus/volltexte/2022/16654/},
+}
+
+@Thesis{,
+  abstract = {Over the last decades, dramatic improvements in combinatorialoptimisation algorithms have significantly impacted artificialintelligence, operations research, and other areas. These advances,however, are achieved through highly sophisticated algorithms that aredifficult to verify and prone to implementation errors that can causeincorrect results. A promising approach to detect wrong results is touse certifying algorithms that produce not only the desired output butalso a certificate or proof of correctness of the output. An externaltool can then verify the proof to determine that the given answer isvalid. In the Boolean satisfiability (SAT) community, this concept iswell established in the form of proof logging, which has become thestandard solution for generating trustworthy outputs. The problem isthat there are still some SAT solving techniques for which prooflogging is challenging and not yet used in practice. Additionally,there are many formalisms more expressive than SAT, such as constraintprogramming, various graph problems and maximum satisfiability(MaxSAT), for which efficient proof logging is out of reach forstate-of-the-art techniques.This work develops a new proof system building on the cutting planesproof system and operating on pseudo-Boolean constraints (0-1 linearinequalities). We explain how such machine-verifiable proofs can becreated for various problems, including parity reasoning, symmetry anddominance breaking, constraint programming, subgraph isomorphism andmaximum common subgraph problems, and pseudo-Boolean problems. Weimplement and evaluate the resulting algorithms and a verifier for theproof format, demonstrating that the approach is practical for a widerange of problems. We are optimistic that the proposed proof system issuitable for designing certifying variants of algorithms inpseudo-Boolean optimisation, MaxSAT and beyond.},
+  author   = {Stephan Gocht},
+  groups   = {PhDThesis},
+  school   = {Department of Computer Science, Lund University},
+  title    = {Certifying Correctness for Combinatorial Algorithms by Using Pseudo-Boolean Reasoning},
+  url      = {https://portal.research.lu.se/en/publications/certifying-correctness-for-combinatorial-algorithms-by-using-pseu},
+  year     = {2022},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}
